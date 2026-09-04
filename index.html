@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Galería Mall de Sebastián · Tiendas & Eventos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            background: #0a0a0a;
+            font-family: 'Inter', sans-serif;
+            color: #e8e0d8;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        ::selection { background: #c9a84c; color: #0a0a0a; }
+        a { text-decoration: none; color: inherit; }
+        img { max-width: 100%; display: block; }
+        .container { max-width: 1320px; margin: 0 auto; padding: 0 24px; }
+
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 700;
+            font-size: 3.2rem;
+            color: #e8e0d8;
+            position: relative;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+            letter-spacing: 2px;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0; bottom: -10px;
+            width: 60px; height: 3px;
+            background: linear-gradient(90deg, #c9a84c, transparent);
+            border-radius: 4px;
+        }
+        .section-title.centered::after { left: 50%; transform: translateX(-50%); }
+        .section-sub {
+            font-weight: 300; color: #a09080; font-size: 1.1rem;
+            letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px;
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1a1a1a; }
+        ::-webkit-scrollbar-thumb { background: #c9a84c; border-radius: 10px; }
+
+        /* ===== HEADER ===== */
+        header {
+            background: rgba(10, 10, 10, 0.92);
+            backdrop-filter: blur(12px);
+            padding: 16px 0;
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(201, 168, 76, 0.15);
+            transition: 0.3s;
+        }
+        header.scrolled { background: rgba(10, 10, 10, 0.98); box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6); }
+        .header-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+        .logo a {
+            font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 1.8rem;
+            color: #e8e0d8; letter-spacing: 4px; transition: 0.3s;
+        }
+        .logo a:hover { color: #c9a84c; }
+        .logo span {
+            font-family: 'Inter', sans-serif; font-size: 0.7rem; font-weight: 300;
+            display: block; color: #a09080; letter-spacing: 6px; margin-top: -4px; text-transform: uppercase;
+        }
+        .nav-links {
+            display: flex; align-items: center; gap: 2.2rem; font-weight: 400;
+            font-size: 0.95rem; letter-spacing: 1.5px; text-transform: uppercase;
+        }
+        .nav-links a {
+            padding: 6px 0; border-bottom: 2px solid transparent; transition: 0.3s;
+            position: relative; color: #c0b0a0;
+        }
+        .nav-links a::after {
+            content: ''; position: absolute; left: 0; bottom: -2px; width: 0; height: 2px;
+            background: #c9a84c; transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .nav-links a:hover::after { width: 100%; }
+        .nav-links a:hover { color: #e8e0d8; }
+        .hamburger { display: none; font-size: 1.6rem; cursor: pointer; color: #e8e0d8; background: none; border: none; transition: 0.3s; }
+        .hamburger:hover { color: #c9a84c; }
+
+        /* ===== HERO ===== */
+        .hero {
+            min-height: 100vh; display: flex; align-items: center;
+            background: linear-gradient(160deg, #0a0a0a 0%, #1a1510 40%, #0f0d0a 100%);
+            position: relative; overflow: hidden; padding: 120px 0 80px;
+            border-bottom: 1px solid rgba(201, 168, 76, 0.1);
+        }
+        .hero::before {
+            content: ''; position: absolute; inset: 0;
+            background:
+                radial-gradient(ellipse at 20% 50%, rgba(201, 168, 76, 0.04) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, rgba(201, 168, 76, 0.03) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; position: relative; z-index: 2; }
+        .hero-content h1 {
+            font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: clamp(3rem, 10vw, 5.5rem);
+            color: #e8e0d8; line-height: 1.05; letter-spacing: 2px; margin-bottom: 16px;
+        }
+        .hero-content h1 .gold { color: #c9a84c; }
+        .hero-sub { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.6rem; color: #c9a84c; margin-bottom: 20px; font-weight: 300; }
+        .hero-text { font-size: 1.05rem; color: #b0a090; max-width: 480px; margin-bottom: 36px; line-height: 1.8; font-weight: 300; }
+        .hero-cta {
+            display: inline-block; background: transparent; color: #e8e0d8; font-family: 'Inter', sans-serif;
+            font-weight: 500; font-size: 0.95rem; padding: 16px 44px; border: 1.5px solid #c9a84c;
+            transition: 0.4s; letter-spacing: 3px; text-transform: uppercase; position: relative; overflow: hidden;
+        }
+        .hero-cta::before {
+            content: ''; position: absolute; inset: 0; background: #c9a84c; transform: scaleX(0);
+            transform-origin: right; transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); z-index: -1;
+        }
+        .hero-cta:hover::before { transform: scaleX(1); transform-origin: left; }
+        .hero-cta:hover { color: #0a0a0a; border-color: #c9a84c; }
+        .hero-scrollhint {
+            margin-top: 30px; font-size: 0.75rem; letter-spacing: 2px; color: #706050;
+            text-transform: uppercase; display: flex; align-items: center; gap: 10px;
+        }
+        .hero-scrollhint i { animation: bob 1.8s ease-in-out infinite; color: #c9a84c; }
+        @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
+        .hero-image { display: flex; justify-content: center; align-items: center; position: relative; }
+        .hero-image img {
+            width: 100%; max-width: 1000px; aspect-ratio: 1/1; object-fit: cover;
+            border: 1px solid rgba(201, 168, 76, 0.2); border-radius: 8px;
+            
+        }
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-12px); } }
+
+        /* ===== INTRO ESCAPARATES ===== */
+        .escaparates-intro {
+            padding: 100px 0 60px;
+            background: #0f0d0a;
+            text-align: center;
+            border-bottom: 1px solid rgba(201, 168, 76, 0.06);
+        }
+        .escaparates-intro p {
+            color: #a09080; font-weight: 300; max-width: 600px; margin: 12px auto 0;
+        }
+
+        /* ===== SCROLLYTELLING ESCAPARATES ===== */
+        .escaparates {
+            position: relative;
+            background: #0a0a0a;
+        }
+
+        .rail {
+            position: fixed;
+            right: 28px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 500;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s;
+        }
+        .rail.visible { opacity: 1; pointer-events: auto; }
+        .rail-dot {
+            width: 10px; height: 10px; border-radius: 50%;
+            background: rgba(201, 168, 76, 0.2);
+            border: 1px solid rgba(201, 168, 76, 0.35);
+            cursor: pointer;
+            transition: 0.3s;
+            position: relative;
+        }
+        .rail-dot:hover { background: rgba(201, 168, 76, 0.5); }
+        .rail-dot.active {
+            background: #c9a84c;
+            box-shadow: 0 0 0 4px rgba(201, 168, 76, 0.12);
+        }
+        .rail-dot .rail-label {
+            position: absolute;
+            right: 22px; top: 50%; transform: translateY(-50%);
+            font-size: 0.65rem; letter-spacing: 1.5px; text-transform: uppercase;
+            color: #a09080; white-space: nowrap;
+            opacity: 0; transition: 0.25s; pointer-events: none;
+        }
+        .rail-dot:hover .rail-label { opacity: 1; }
+
+        .escaparate-panel {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            border-bottom: 1px solid rgba(201, 168, 76, 0.08);
+        }
+
+        .escaparate-bg {
+            position: absolute;
+            inset: -6% -2%;
+            overflow: hidden;
+            background: #0a0a0a;
+            filter: saturate(0.85) brightness(0.55);
+            transform: scale(1.08) translateY(0px);
+            transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), filter 1.2s ease;
+            will-change: transform;
+        }
+        .escaparate-bg iframe {
+            width: 100%; height: 100%; border: 0; display: block;
+            pointer-events: none; /* el sitio se ve, pero el scroll sigue controlando esta página */
+        }
+        .escaparate-panel.in-view .escaparate-bg {
+            filter: saturate(1) brightness(0.62);
+        }
+        .escaparate-preview-tag {
+            position: absolute; top: 18px; left: 18px; z-index: 2;
+            font-family: 'Inter', sans-serif; font-size: 0.65rem; letter-spacing: 1.5px; text-transform: uppercase;
+            background: rgba(10, 10, 10, 0.55); color: #c9a84c; border: 1px solid rgba(201, 168, 76, 0.3);
+            padding: 6px 12px; border-radius: 20px; backdrop-filter: blur(4px);
+        }
+
+        .escaparate-scrim {
+            position: absolute; inset: 0;
+            background: linear-gradient(90deg, rgba(6,5,4,0.92) 0%, rgba(6,5,4,0.55) 42%, rgba(6,5,4,0.25) 68%, rgba(6,5,4,0.55) 100%);
+        }
+
+        .escaparate-content {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 1320px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .escaparate-inner {
+            max-width: 560px;
+            opacity: 0;
+            transform: translateY(36px);
+            transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .escaparate-panel.in-view .escaparate-inner {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .escaparate-count {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 5rem;
+            color: rgba(232, 224, 216, 0.14);
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .escaparate-cat {
+            display: inline-block;
+            font-size: 0.7rem;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: #c9a84c;
+            border: 1px solid rgba(201, 168, 76, 0.35);
+            padding: 5px 16px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+        }
+
+        .escaparate-inner h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.4rem, 5vw, 3.6rem);
+            font-weight: 600;
+            color: #f2ece4;
+            line-height: 1.08;
+            margin-bottom: 18px;
+        }
+
+        .escaparate-inner p {
+            color: #cbbfae;
+            font-weight: 300;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 26px;
+            max-width: 480px;
+        }
+
+        .escaparate-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 30px; }
+        .escaparate-tags span {
+            background: rgba(201, 168, 76, 0.08);
+            border: 1px solid rgba(201, 168, 76, 0.18);
+            padding: 5px 16px; border-radius: 20px;
+            font-size: 0.68rem; letter-spacing: 0.5px; color: #d8cdbe; text-transform: uppercase;
+        }
+
+        .escaparate-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+        .escaparate-btn {
+            background: transparent; border: 1.5px solid #c9a84c; color: #f2ece4;
+            padding: 13px 30px; font-family: 'Inter', sans-serif; font-size: 0.78rem;
+            letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: 0.35s;
+        }
+        .escaparate-btn:hover { background: #c9a84c; color: #0a0a0a; }
+        .escaparate-btn.ghost { border-color: rgba(232, 224, 216, 0.25); color: #cbbfae; }
+        .escaparate-btn.ghost:hover { background: rgba(232, 224, 216, 0.08); color: #f2ece4; }
+
+        .escaparate-progressbar {
+            position: absolute;
+            bottom: 0; left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #c9a84c, transparent);
+            width: 0%;
+        }
+
+        /* ===== NOTICIAS & EVENTOS ===== */
+        .noticias { padding: 100px 0 80px; background: #0f0d0a; border-bottom: 1px solid rgba(201, 168, 76, 0.06); }
+        .noticias-header { text-align: center; margin-bottom: 60px; }
+        .noticias-header p { color: #a09080; font-weight: 300; max-width: 600px; margin: 12px auto 0; }
+        .noticias-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 30px; }
+        .noticias-empty {
+            max-width: 620px; margin: 0 auto; padding: 48px 28px; text-align: center;
+            border: 1px solid rgba(201, 168, 76, 0.12); border-radius: 8px;
+            background: rgba(201, 168, 76, 0.03);
+        }
+        .noticias-empty i { color: #c9a84c; font-size: 2rem; margin-bottom: 16px; opacity: 0.8; }
+        .noticias-empty h3 { font-family: 'Cormorant Garamond', serif; color: #e8e0d8; font-size: 2rem; font-weight: 600; margin-bottom: 8px; }
+        .noticias-empty p { color: #a09080; font-weight: 300; }
+        .noticia-card {
+            background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(201, 168, 76, 0.06);
+            border-radius: 8px; overflow: hidden; transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); position: relative;
+        }
+        .noticia-card:hover { border-color: rgba(201, 168, 76, 0.15); transform: translateY(-4px); background: rgba(255, 255, 255, 0.03); }
+        .noticia-card .noti-img {
+            height: 180px; background: rgba(201, 168, 76, 0.04); display: flex; align-items: center; justify-content: center;
+            font-size: 2.8rem; color: #c9a84c; border-bottom: 1px solid rgba(201, 168, 76, 0.05); overflow: hidden; position: relative;
+        }
+        .noticia-card .noti-img .noti-foto { width: 100%; height: 100%; object-fit: cover; opacity: 0.5; transition: 0.5s; }
+        .noticia-card:hover .noti-img .noti-foto { opacity: 0.8; transform: scale(1.03); }
+        .noticia-card .noti-img .noti-icon-overlay {
+            position: absolute; font-size: 1.8rem; color: #c9a84c; opacity: 0.6;
+            background: rgba(0, 0, 0, 0.3); padding: 12px; border-radius: 50%; backdrop-filter: blur(4px);
+        }
+        .noticia-card .noti-body { padding: 28px 26px 20px; }
+        .noticia-card .noti-cat { font-size: 0.6rem; color: #c9a84c; text-transform: uppercase; letter-spacing: 2px; font-weight: 500; margin-bottom: 4px; }
+        .noticia-card h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 600; color: #e8e0d8; margin-bottom: 6px; }
+        .noticia-card .noti-meta { font-size: 0.75rem; color: #706050; margin-bottom: 12px; display: flex; gap: 16px; flex-wrap: wrap; }
+        .noticia-card .noti-meta i { color: #c9a84c; opacity: 0.5; margin-right: 4px; }
+        .noticia-card p { color: #b0a090; font-size: 0.92rem; font-weight: 300; line-height: 1.7; }
+        .noticia-card .btn-noti {
+            margin-top: 16px; display: inline-block; background: transparent; color: #c9a84c; padding: 8px 0;
+            font-family: 'Inter', sans-serif; font-weight: 400; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase;
+            border: none; border-bottom: 1px solid rgba(201, 168, 76, 0.2); cursor: pointer; transition: 0.3s;
+        }
+        .noticia-card .btn-noti:hover { color: #e8e0d8; border-bottom-color: #c9a84c; letter-spacing: 3px; }
+
+        /* ===== FORMULARIO INSCRIPCIÓN ===== */
+        .form-section { padding: 60px 0 80px; background: #0a0a0a; border-top: 1px solid rgba(201, 168, 76, 0.06); }
+        .form-section h2 { text-align: center; margin-bottom: 12px; }
+        .form-section .form-sub { text-align: center; color: #a09080; font-weight: 300; margin-bottom: 40px; }
+        .form-inscripcion {
+            max-width: 640px; margin: 0 auto; background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(201, 168, 76, 0.08); border-radius: 8px; padding: 40px 44px;
+        }
+        .form-inscripcion .form-group { margin-bottom: 20px; }
+        .form-inscripcion label {
+            display: block; font-size: 0.8rem; font-weight: 400; color: #a09080;
+            letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px;
+        }
+        .form-inscripcion input, .form-inscripcion textarea, .form-inscripcion select {
+            width: 100%; padding: 14px 18px; background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(201, 168, 76, 0.08); border-radius: 4px; color: #e8e0d8;
+            font-family: 'Inter', sans-serif; font-size: 0.95rem; transition: 0.3s; outline: none;
+        }
+        .form-inscripcion input:focus, .form-inscripcion textarea:focus, .form-inscripcion select:focus {
+            border-color: #c9a84c; background: rgba(201, 168, 76, 0.04); box-shadow: 0 0 20px rgba(201, 168, 76, 0.03);
+        }
+        .form-inscripcion input::placeholder, .form-inscripcion textarea::placeholder { color: #504030; font-weight: 300; }
+        .form-inscripcion textarea { min-height: 100px; resize: vertical; }
+        .form-inscripcion select option { background: #1a1a1a; color: #e8e0d8; }
+        .form-inscripcion .btn-enviar {
+            width: 100%; padding: 16px; background: transparent; border: 1.5px solid #c9a84c; color: #e8e0d8;
+            font-family: 'Inter', sans-serif; font-weight: 500; font-size: 0.9rem; letter-spacing: 3px;
+            text-transform: uppercase; cursor: pointer; transition: 0.4s; border-radius: 4px; position: relative; overflow: hidden;
+        }
+        .form-inscripcion .btn-enviar::before {
+            content: ''; position: absolute; inset: 0; background: #c9a84c; transform: scaleX(0);
+            transform-origin: right; transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); z-index: -1;
+        }
+        .form-inscripcion .btn-enviar:hover::before { transform: scaleX(1); transform-origin: left; }
+        .form-inscripcion .btn-enviar:hover { color: #0a0a0a; border-color: #c9a84c; }
+        /* ===== UBICACIÓN ===== */
+        .ubicacion { padding: 100px 0 80px; background: #0f0d0a; border-bottom: 1px solid rgba(201, 168, 76, 0.06); }
+        .ubicacion-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+        .ubicacion-info h2 { margin-bottom: 12px; }
+        .ubicacion-info .dir { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; color: #e8e0d8; font-weight: 400; margin: 8px 0 4px; }
+        .ubicacion-info .dir i { color: #c9a84c; margin-right: 10px; }
+        .ubicacion-info .horario { color: #a09080; font-weight: 300; margin-bottom: 20px; font-size: 0.95rem; }
+        .ubicacion-info .horario i { color: #c9a84c; margin-right: 8px; width: 20px; }
+        .ubicacion-info .contacto-line { display: flex; align-items: center; gap: 12px; color: #b0a090; font-weight: 300; margin: 6px 0; }
+        .ubicacion-info .contacto-line i { color: #c9a84c; font-size: 1.2rem; width: 28px; }
+        .mapa-container {
+            background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(201, 168, 76, 0.08); border-radius: 8px;
+            min-height: 300px; overflow: hidden; transition: 0.4s;
+        }
+        .mapa-container:hover { border-color: rgba(201, 168, 76, 0.2); }
+        .mapa-container iframe { display: block; width: 100%; height: 360px; border: 0; filter: saturate(0.75) sepia(0.12); }
+
+        /* ===== WHATSAPP FLOAT ===== */
+        .whatsapp-float {
+            position: fixed; bottom: 28px; right: 28px; background: #25D366; color: #fff;
+            width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 2.2rem; box-shadow: 0 8px 30px rgba(37, 211, 102, 0.3); transition: 0.3s; z-index: 999;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+        .whatsapp-float:hover { transform: scale(1.08); box-shadow: 0 12px 40px rgba(37, 211, 102, 0.4); }
+
+        /* ===== FOOTER ===== */
+        footer { background: #060505; padding: 40px 0 32px; text-align: center; border-top: 1px solid rgba(201, 168, 76, 0.05); }
+        footer .footer-brand { font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: #e8e0d8; letter-spacing: 4px; }
+        footer .footer-brand span { color: #c9a84c; }
+        footer p { color: #706050; font-weight: 300; font-size: 0.85rem; letter-spacing: 1px; margin-top: 4px; }
+        footer .socials { display: flex; justify-content: center; gap: 20px; margin: 16px 0 10px; }
+        footer .socials a {
+            color: #706050; font-size: 1.4rem; transition: 0.3s; border: 1px solid rgba(201, 168, 76, 0.05);
+            width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+        }
+        footer .socials a:hover { color: #c9a84c; border-color: rgba(201, 168, 76, 0.2); transform: translateY(-2px); }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 992px) {
+            .hero-grid { grid-template-columns: 1fr; text-align: center; gap: 40px; }
+            .hero-text { margin-left: auto; margin-right: auto; }
+            .hero-scrollhint { justify-content: center; }
+            .hero-content h1 { font-size: 3.2rem; }
+            .ubicacion-grid { grid-template-columns: 1fr; gap: 40px; }
+            .section-title { font-size: 2.6rem; }
+            .noticias-grid { grid-template-columns: 1fr 1fr; }
+            .escaparate-inner { max-width: 100%; }
+            .rail { right: 16px; }
+        }
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none; flex-direction: column; width: 100%; gap: 14px; padding: 24px 0 12px;
+                border-top: 1px solid rgba(201, 168, 76, 0.06); margin-top: 16px;
+            }
+            .nav-links.open { display: flex; }
+            .hamburger { display: block; }
+            .header-inner { flex-wrap: wrap; }
+            .hero { padding: 100px 0 60px; min-height: auto; }
+            .noticias-grid { grid-template-columns: 1fr; }
+            .section-title { font-size: 2.2rem; }
+            .container { padding: 0 16px; }
+            .whatsapp-float { width: 52px; height: 52px; font-size: 1.8rem; bottom: 20px; right: 20px; }
+            .form-inscripcion { padding: 28px 20px; }
+            .escaparate-content { padding: 0 20px; }
+            .escaparate-count { font-size: 3.4rem; }
+            .rail { display: none; }
+            .escaparate-panel { min-height: 92vh; }
+        }
+        @media (max-width: 480px) {
+            .hero-content h1 { font-size: 2.6rem; }
+            .hero-cta { padding: 14px 32px; font-size: 0.85rem; }
+            .logo a { font-size: 1.4rem; }
+            .escaparate-actions { flex-direction: column; align-items: flex-start; }
+            .escaparate-btn { width: 100%; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== HEADER ===== -->
+    <header id="header">
+        <div class="container header-inner">
+            <div class="logo">
+                <a href="#">Galería <span style="color:#c9a84c;">Mall</span></a>
+                <span>✦ Santa Rosa 553 ✦</span>
+            </div>
+            <button class="hamburger" id="hamburger" aria-label="Menú">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav class="nav-links" id="navLinks">
+                <a href="#escaparates">Tiendas</a>
+                <a href="#noticias">Noticias</a>
+                <a href="#formulario">Inscripción</a>
+                <a href="#ubicacion">Ubicación</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero" id="inicio">
+        <div class="container hero-grid">
+            <div class="hero-content">
+                <h1>Un <span class="gold">espacio</span> donde las tiendas cuentan <span class="gold">historias</span></h1>
+                <p class="hero-sub">Galería comercial · Antigüedades &amp; Vintage</p>
+                <p class="hero-text">
+                    Más de 20 tiendas especializadas en antigüedades, coleccionismo, arte y diseño.
+                    Un punto de encuentro para los amantes de lo único y lo auténtico.
+                </p>
+                <a href="#escaparates" class="hero-cta">
+                    <i class="fas fa-store" style="margin-right:10px;"></i> Explorar tiendas
+                </a>
+                <div class="hero-scrollhint">
+                    <i class="fas fa-arrow-down"></i> Desliza para recorrer cada escaparate
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="logo.png" alt="Interior de la Galería Mall" />
+            </div>
+        </div>
+    </section>
+
+    <div class="escaparates-intro">
+        <div class="container">
+            <span class="section-sub">Descubre</span>
+            <h2 class="section-title centered">Nuestras tiendas</h2>
+            <p>Sigue bajando: cada tienda ocupa su propio escaparate a pantalla completa, con una vista previa en vivo de su sitio y su historia, tal como se ve al caminar por la galería.</p>
+        </div>
+    </div>
+
+    <!-- ===== ESCAPARATES (SCROLLYTELLING) ===== -->
+    <section class="escaparates" id="escaparates">
+        <nav class="rail" id="rail" aria-label="Navegación rápida entre tiendas"></nav>
+        <div id="escaparatesTrack"></div>
+    </section>
+
+    <!-- ===== NOTICIAS & EVENTOS ===== -->
+    <section class="noticias" id="noticias">
+        <div class="container">
+            <div class="noticias-header">
+                <span class="section-sub">Actualidad</span>
+                <h2 class="section-title centered">Noticias &amp; Eventos</h2>
+                <p>Lo que está pasando en la galería: exposiciones, ferias, talleres y más.</p>
+            </div>
+            <div class="noticias-grid" id="noticiasGrid">
+                <div class="noticias-empty">
+                    <i class="fas fa-newspaper"></i>
+                    <h3>Por ahora no hay noticias</h3>
+                    <p>Pronto compartiremos novedades, eventos y actividades de la galería.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FORMULARIO INSCRIPCIÓN ===== -->
+    <section class="form-section" id="formulario">
+        <div class="container">
+            <h2 class="section-title centered">Consultas sobre algún local</h2>
+            <p class="form-sub">Déjanos tu consulta y te responderemos por WhatsApp.</p>
+            <form class="form-inscripcion" id="formInscripcion">
+                <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required />
+                </div>
+                <div class="form-group">
+                    <label for="apellido">Apellido</label>
+                    <input type="text" id="apellido" name="apellido" placeholder="Tu apellido" required />
+                </div>
+                <div class="form-group">
+                    <label for="evento">Local sobre el que deseas consultar</label>
+                    <select id="evento" name="evento" required>
+                        <option value="">Selecciona un local...</option>
+                        <option value="Cerámica La Bendición">Cerámica La Bendición</option>
+                        <option value="Yenniffer Spa">Yenniffer Spa</option>
+                        <option value="Creaciones Germa">Creaciones Germa</option>
+                        <option value="Librería El Rafa">Librería El Rafa</option>
+                        <option value="Flores Eternas">Flores Eternas</option>
+                        <option value="Otro local de la galería">Otro local de la galería</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="telefono">Teléfono (opcional)</label>
+                    <input type="tel" id="telefono" name="telefono" placeholder="+56 9 1234 5678" />
+                </div>
+                <div class="form-group">
+                    <label for="descripcion">Tu consulta</label>
+                    <textarea id="descripcion" name="descripcion" placeholder="Escribe aquí tu consulta sobre el local..."></textarea>
+                </div>
+                <button type="submit" class="btn-enviar">
+                    <i class="fab fa-whatsapp" style="margin-right:10px;"></i> Enviar por WhatsApp
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- ===== UBICACIÓN ===== -->
+    <section class="ubicacion" id="ubicacion">
+        <div class="container">
+            <div class="ubicacion-grid">
+                <div class="ubicacion-info">
+                    <span class="section-sub">Encuéntranos</span>
+                    <h2 class="section-title">Ubicación</h2>
+                    <div class="dir"><i class="fas fa-map-pin"></i> Santa Rosa 553, Los Andes</div>
+                    <div class="horario"><i class="fas fa-clock"></i> Lun – Sáb: 10:00 – 19:00 · Dom: 11:00 – 17:00</div>
+                    <div class="contacto-line"><i class="fas fa-phone-alt"></i> +56 9 5216 1602</div>
+                    <div class="contacto-line"><i class="fas fa-envelope"></i> contacto@galeriamall.cl</div>
+                    <div style="margin-top:24px; display:flex; gap:12px; flex-wrap:wrap;">
+                        <span style="background:rgba(201,168,76,0.06); border:1px solid rgba(201,168,76,0.08); padding:6px 18px; border-radius:4px; font-size:0.75rem; color:#a09080; letter-spacing:1px; text-transform:uppercase;">
+                            <i class="fas fa-store" style="color:#c9a84c; margin-right:6px;"></i> 20+ tiendas
+                        </span>
+                        <span style="background:rgba(201,168,76,0.06); border:1px solid rgba(201,168,76,0.08); padding:6px 18px; border-radius:4px; font-size:0.75rem; color:#a09080; letter-spacing:1px; text-transform:uppercase;">
+                            <i class="fas fa-parking" style="color:#c9a84c; margin-right:6px;"></i> Estacionamiento
+                        </span>
+                        <span style="background:rgba(201,168,76,0.06); border:1px solid rgba(201,168,76,0.08); padding:6px 18px; border-radius:4px; font-size:0.75rem; color:#a09080; letter-spacing:1px; text-transform:uppercase;">
+                            <i class="fas fa-wheelchair" style="color:#c9a84c; margin-right:6px;"></i> Acceso universal
+                        </span>
+                    </div>
+                </div>
+                <div class="mapa-container">
+                    <iframe
+                        src="https://www.google.com/maps?q=Santa+Rosa+553,+Los+Andes,+Chile&output=embed"
+                        title="Mapa de Galería Mall, Santa Rosa 553, Los Andes"
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== WHATSAPP FLOAT ===== -->
+    <a href="https://wa.me/56952161602?text=Hola%20Galería%20Mall%20de%20Sebastián%2C%20quiero%20consultar%20por%20las%20tiendas" target="_blank" class="whatsapp-float" aria-label="WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <div class="container">
+            <div class="footer-brand">Galería <span>Mall</span></div>
+            <p>✦ Tiendas con historia · Santa Rosa 553, Los Andes ✦</p>
+            <div class="socials">
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest-p"></i></a>
+                <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            </div>
+            <p style="font-size:0.7rem; opacity:0.4; margin-top:10px;">&copy; 2026 · Donde las tiendas tienen historia.</p>
+        </div>
+    </footer>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        (function() {
+            "use strict";
+
+            // ---- HEADER SCROLL ----
+            const header = document.getElementById('header');
+            window.addEventListener('scroll', () => {
+                header.classList.toggle('scrolled', window.scrollY > 40);
+            });
+
+            // ---- TIENDAS: vista previa en vivo de cada sitio ----
+            const tiendas = [{
+                nombre: "Cerámica La Bendición",
+                categoria: "Taller y sala de ventas",
+                desc: "Taller y sala de ventas dentro de un centro comercial, con figuras de yeso y cemento blanco pintadas a mano: budas, vírgenes, santos, leones y monjes.",
+                tags: ["Yeso y cemento", "Pintado a mano", "Centro comercial"],
+                url: "https://hasse-coder22.github.io/landing-4/"
+            }, {
+                nombre: "Yenniffer Spa",
+                categoria: "Terapia & tienda esotérica",
+                desc: "Espacio en Los Andes que combina terapia integral, terapia floral, registros akásicos y lectura de tarot, junto a una tienda de piedras, sahumerios y joyería energética.",
+                tags: ["Terapia", "Tarot", "Tienda esotérica"],
+                url: "https://hasse-coder22.github.io/landing-2/"
+            }, {
+                nombre: "Creaciones Germa",
+                categoria: "Yeso artesanal & duendes",
+                desc: "Taller que moldea y pinta a mano figuras de yeso —budas, ángeles, Ganeshas—, además de duendes de protección y abundancia, joyería, cristales e inciensos.",
+                tags: ["Yeso artesanal", "Duendes", "Joyería"],
+                url: "https://hasse-coder22.github.io/landing-3/"
+            }, {
+                nombre: "Librería El Rafa",
+                categoria: "Libros y cultura",
+                desc: "Libros a precio popular en el Mall de Sebastián, Los Andes: historia, música, política, educación e infancia en un mismo estante, con el respaldo cultural de Rafael Reyes.",
+                tags: ["libros", "cultura local", "precio popular", "San Esteban"],
+                url: "https://hasse-coder22.github.io/libreria/"
+            }, {
+                nombre: "Flores Eternas",
+                categoria: "Arreglos florales",
+                desc: "Arreglos florales de precisión, pensados para durar en el tiempo, con colecciones curadas y foco en el detalle y la exclusividad.",
+                tags: ["Arreglos florales", "Curatoría", "Larga duración"],
+                url: "https://hasse-coder22.github.io/landing-5/"
+            }];
+
+            const noticias = [];
+
+            function pad(n) { return String(n).padStart(2, '0'); }
+
+            // ---- RENDER ESCAPARATES (scrollytelling) ----
+            const track = document.getElementById('escaparatesTrack');
+            const rail = document.getElementById('rail');
+
+            let html = '';
+            tiendas.forEach((t, i) => {
+                html += `
+                    <div class="escaparate-panel" id="tienda-${i}" data-idx="${i}">
+                        <div class="escaparate-bg" data-bg="${t.url}">
+                            <iframe src="${t.url}" title="Vista previa en vivo de ${t.nombre}" loading="lazy" referrerpolicy="no-referrer"></iframe>
+                            <span class="escaparate-preview-tag"><i class="fas fa-satellite-dish" style="margin-right:6px;"></i>Vista previa en vivo</span>
+                        </div>
+                        <div class="escaparate-scrim"></div>
+                        <div class="escaparate-content">
+                            <div class="escaparate-inner">
+                                <div class="escaparate-count">${pad(i + 1)}</div>
+                                <span class="escaparate-cat">${t.categoria}</span>
+                                <h2>${t.nombre}</h2>
+                                <p>${t.desc}</p>
+                                <div class="escaparate-tags">${t.tags.map(tag => `<span>${tag}</span>`).join('')}</div>
+                                <div class="escaparate-actions">
+                                    <a href="${t.url}" target="_blank" rel="noopener" class="escaparate-btn">
+                                        <i class="fas fa-arrow-up-right-from-square" style="margin-right:8px;"></i>Ver sitio completo
+                                    </a>
+                                    <a href="#ubicacion" class="escaparate-btn ghost">
+                                        <i class="fas fa-map-pin" style="margin-right:8px;"></i>Ver ubicación
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="escaparate-progressbar" data-bar="${i}"></div>
+                    </div>
+                `;
+            });
+            track.innerHTML = html;
+
+            rail.innerHTML = tiendas.map((t, i) => `
+                <div class="rail-dot" data-idx="${i}" role="button" tabindex="0" aria-label="Ir a ${t.nombre}">
+                    <span class="rail-label">${pad(i + 1)} · ${t.nombre}</span>
+                </div>
+            `).join('');
+            rail.classList.add('visible');
+
+            const panels = Array.from(document.querySelectorAll('.escaparate-panel'));
+            const dots = Array.from(document.querySelectorAll('.rail-dot'));
+
+            // Revelado + parallax por panel
+            const io = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    const panel = entry.target;
+                    const idx = parseInt(panel.getAttribute('data-idx'));
+                    if (entry.isIntersecting) {
+                        panel.classList.add('in-view');
+                        dots.forEach(d => d.classList.toggle('active', parseInt(d.getAttribute('data-idx')) === idx));
+                    } else if (entry.intersectionRatio < 0.15) {
+                        panel.classList.remove('in-view');
+                    }
+                });
+            }, { threshold: [0.15, 0.4, 0.6] });
+
+            panels.forEach(p => io.observe(p));
+
+            // Parallax suave en las fotos de fondo mientras se hace scroll
+            let ticking = false;
+            function updateParallax() {
+                panels.forEach(panel => {
+                    const rect = panel.getBoundingClientRect();
+                    const vh = window.innerHeight;
+                    const progress = 1 - (rect.top + rect.height / 2) / vh; // -ish -1..1 centered
+                    const bg = panel.querySelector('.escaparate-bg');
+                    const clamped = Math.max(-1, Math.min(1, progress));
+                    bg.style.transform = `scale(1.08) translateY(${clamped * 34}px)`;
+                });
+                ticking = false;
+            }
+            window.addEventListener('scroll', () => {
+                if (!ticking) {
+                    requestAnimationFrame(updateParallax);
+                    ticking = true;
+                }
+            }, { passive: true });
+            updateParallax();
+
+            // Navegación por puntos laterales
+            dots.forEach(dot => {
+                const go = () => {
+                    const idx = parseInt(dot.getAttribute('data-idx'));
+                    document.getElementById(`tienda-${idx}`).scrollIntoView({ behavior: 'smooth' });
+                };
+                dot.addEventListener('click', go);
+                dot.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } });
+            });
+
+            // Botones "Inscribirme" dentro de cada escaparate → preseleccionan evento si coincide
+            document.querySelectorAll('[data-inscribir]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.getElementById('formulario').scrollIntoView({ behavior: 'smooth' });
+                    setTimeout(() => document.getElementById('nombre').focus(), 500);
+                });
+            });
+
+            // ---- RENDER NOTICIAS ----
+            const noticiasGrid = document.getElementById('noticiasGrid');
+            let nHtml = '';
+            if (noticias.length) noticias.forEach(n => {
+                nHtml += `
+                    <div class="noticia-card">
+                        <div class="noti-img">
+                            <img src="${n.foto}" alt="${n.titulo}" class="noti-foto" />
+                            <div class="noti-icon-overlay"><i class="fas ${n.icon}"></i></div>
+                        </div>
+                        <div class="noti-body">
+                            <div class="noti-cat">${n.categoria}</div>
+                            <h4>${n.titulo}</h4>
+                            <div class="noti-meta">
+                                <span><i class="fas fa-calendar-alt"></i> ${n.fecha}</span>
+                                <span><i class="fas fa-map-pin"></i> ${n.lugar}</span>
+                            </div>
+                            <p>${n.desc}</p>
+                            <button class="btn-noti" data-id="${n.id}">
+                                <i class="fas fa-pen" style="margin-right:6px;"></i> Inscribirme
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            noticiasGrid.innerHTML = nHtml;
+
+            document.querySelectorAll('.btn-noti').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const id = parseInt(this.getAttribute('data-id'));
+                    const noti = noticias.find(n => n.id === id);
+                    if (noti) {
+                        document.getElementById('formulario').scrollIntoView({ behavior: 'smooth' });
+                        const select = document.getElementById('evento');
+                        const options = select.options;
+                        for (let i = 0; i < options.length; i++) {
+                            if (options[i].text === noti.titulo) { select.value = noti.titulo; break; }
+                        }
+                        setTimeout(() => document.getElementById('nombre').focus(), 500);
+                    }
+                });
+            });
+
+            // ---- FORMULARIO: ENVÍO A WHATSAPP ----
+            const form = document.getElementById('formInscripcion');
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const nombre = document.getElementById('nombre').value.trim();
+                const apellido = document.getElementById('apellido').value.trim();
+                const evento = document.getElementById('evento').value;
+                const telefono = document.getElementById('telefono').value.trim();
+                const descripcion = document.getElementById('descripcion').value.trim();
+
+                if (!nombre || !apellido || !evento) {
+                    alert('⚠️ Por favor completa los campos obligatorios: Nombre, Apellido y Evento.');
+                    return;
+                }
+
+                let mensaje = `📋 *Nueva consulta sobre un local*%0A%0A`;
+                mensaje += `👤 *Nombre:* ${nombre} ${apellido}%0A`;
+                mensaje += `🏬 *Local:* ${evento}%0A`;
+                if (telefono) mensaje += `📞 *Teléfono:* ${telefono}%0A`;
+                if (descripcion) mensaje += `📝 *Descripción:* ${descripcion}%0A`;
+                mensaje += `%0A📍 Galería Mall de Sebastián · Santa Rosa 553, Los Andes`;
+
+                const url = `https://wa.me/56952161602?text=${mensaje}`;
+                window.open(url, '_blank');
+                alert('✅ Tu consulta ha sido enviada a través de WhatsApp. ¡Te contactaremos pronto!');
+                form.reset();
+            });
+
+            // ---- HAMBURGER ----
+            const hamburger = document.getElementById('hamburger');
+            const navLinks = document.getElementById('navLinks');
+            hamburger.addEventListener('click', function() {
+                navLinks.classList.toggle('open');
+                this.querySelector('i').className = navLinks.classList.contains('open') ? 'fas fa-times' : 'fas fa-bars';
+            });
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('open');
+                    hamburger.querySelector('i').className = 'fas fa-bars';
+                });
+            });
+
+        })();
+    </script>
+</body>
+</html>

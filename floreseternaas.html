@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flores Eternas – Arreglos de Precisión Botánica</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #5a5a5a;
+            background: #faf8f5;
+            line-height: 1.7;
+            letter-spacing: 0.3px;
+        }
+
+        /* Typography System */
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 600;
+            line-height: 1.15;
+            color: #3d3d3d;
+            letter-spacing: -0.02em;
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 3vw, 3rem);
+            font-weight: 500;
+            color: #3d3d3d;
+            letter-spacing: -0.01em;
+        }
+
+        h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 500;
+            color: #4a4a4a;
+        }
+
+        p {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: #6a6a6a;
+        }
+
+        .eyebrow {
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #a67b7b;
+            margin-bottom: 1rem;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 2.5rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: linear-gradient(180deg, rgba(250,248,245,0.95) 0%, rgba(250,248,245,0) 100%);
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #3d3d3d;
+            text-decoration: none;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 3.5rem;
+        }
+
+        nav a {
+            font-size: 0.9rem;
+            text-decoration: none;
+            color: #6a6a6a;
+            transition: color 0.3s ease;
+            font-weight: 400;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #a67b7b;
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 120px;
+            height: 85vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            padding: 0 4rem;
+            max-width: 1600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-text {
+            z-index: 2;
+        }
+
+        .hero h1 {
+            margin-bottom: 1.5rem;
+            color: #2a2a2a;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: #7a7a7a;
+            font-weight: 300;
+            margin-bottom: 2.5rem;
+            max-width: 90%;
+        }
+
+        .hero-image {
+            position: relative;
+            height: 100%;
+            display: flex;
+            align-items: flex-end;
+            opacity: 0;
+            animation: fadeInRight 0.8s ease 0.3s forwards;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: 90%;
+            object-fit: cover;
+            border-radius: 2px;
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(60px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* CTA Buttons */
+        .cta-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1rem 2.5rem;
+            background: #a67b7b;
+            color: white;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 1px;
+            letter-spacing: 0.3px;
+        }
+
+        .cta-primary:hover {
+            background: #8a6464;
+            transform: translateX(4px);
+        }
+
+        .arrow {
+            font-size: 0.8rem;
+        }
+
+        /* Section Spacing */
+        section {
+            padding: 6rem 4rem;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        /* Galería - The Signature Element */
+        .gallery-section {
+            padding: 8rem 0;
+            background: white;
+        }
+
+        .gallery-intro {
+            max-width: 1200px;
+            margin: 0 auto 5rem;
+            padding: 0 4rem;
+        }
+
+        .gallery-intro p {
+            max-width: 600px;
+            font-size: 1.05rem;
+            line-height: 1.9;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+            padding: 0 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 1;
+            background: #f9f7f4;
+            opacity: 0;
+            animation: scaleInFade 0.6s ease forwards;
+        }
+
+        @keyframes scaleInFade {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .gallery-item:nth-child(1) { animation-delay: 0.1s; }
+        .gallery-item:nth-child(2) { animation-delay: 0.2s; }
+        .gallery-item:nth-child(3) { animation-delay: 0.3s; }
+        .gallery-item:nth-child(4) { animation-delay: 0.4s; }
+        .gallery-item:nth-child(5) { animation-delay: 0.5s; }
+        .gallery-item:nth-child(6) { animation-delay: 0.6s; }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease, filter 0.4s ease;
+            filter: brightness(1);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.08);
+            filter: brightness(0.95);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: white;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-overlay h3 {
+            color: white;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .gallery-price {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        /* Philosophy Section */
+        .philosophy {
+            background: #faf8f5;
+        }
+
+        .philosophy-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .philosophy-text h2 {
+            margin-bottom: 2rem;
+        }
+
+        .philosophy-text p {
+            margin-bottom: 1.5rem;
+        }
+
+        .philosophy-values {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2.5rem;
+            margin-top: 2rem;
+        }
+
+        .value-item {
+            padding: 0;
+        }
+
+        .value-item .eyebrow {
+            margin-bottom: 0.8rem;
+        }
+
+        .value-item h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.8rem;
+            color: #3d3d3d;
+        }
+
+        .value-item p {
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .philosophy-image {
+            position: relative;
+        }
+
+        .philosophy-image img {
+            width: 100%;
+            border-radius: 1px;
+        }
+
+        /* Process Section */
+        .process {
+            background: white;
+        }
+
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .process-step {
+            position: relative;
+            padding-bottom: 2rem;
+        }
+
+        .process-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: rgba(166, 123, 123, 0.2);
+            margin-bottom: 1rem;
+            line-height: 1;
+        }
+
+        .process-step h3 {
+            margin-bottom: 1rem;
+        }
+
+        .process-step p {
+            font-size: 0.95rem;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            background: #faf8f5;
+            text-align: center;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            margin-top: 4rem;
+        }
+
+        .testimonial {
+            background: white;
+            padding: 2.5rem;
+            position: relative;
+        }
+
+        .testimonial p {
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            color: #3d3d3d;
+            font-style: normal;
+        }
+
+        .testimonial-role {
+            font-size: 0.85rem;
+            color: #a67b7b;
+            margin-top: 0.5rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: #3d3d3d;
+            color: white;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            color: white;
+            margin-bottom: 2rem;
+        }
+
+        .cta-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1rem 2.5rem;
+            border: 1px solid white;
+            color: white;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: transparent;
+        }
+
+        .cta-secondary:hover {
+            background: white;
+            color: #3d3d3d;
+        }
+
+        /* Footer */
+        footer {
+            background: #2a2a2a;
+            color: #a0a0a0;
+            padding: 3rem 4rem;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: #a67b7b;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            nav {
+                padding: 2rem;
+            }
+
+            nav ul {
+                gap: 2rem;
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+                padding: 0 2rem;
+                height: auto;
+                margin-top: 100px;
+            }
+
+            .hero-image {
+                min-height: 400px;
+            }
+
+            section {
+                padding: 4rem 2rem;
+            }
+
+            .philosophy-content {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .process-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-grid {
+                padding: 0 2rem;
+            }
+
+            .gallery-intro {
+                padding: 0 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .hero {
+                margin-top: 80px;
+            }
+
+            .philosophy-values {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+                padding: 0 1.5rem;
+            }
+
+            .gallery-intro {
+                padding: 0 1.5rem;
+            }
+        }
+
+        /* Scroll Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="#" class="logo">Flores Eternas</a>
+        <ul>
+            <li><a href="#colecciones">Colecciones</a></li>
+            <li><a href="#filosofia">Filosofía</a></li>
+            <li><a href="#proceso">Proceso</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-text">
+            <p class="eyebrow">Belleza Atemporal</p>
+            <h1>Arreglos florales de precisión botánica que trascienden el tiempo</h1>
+            <p class="hero-subtitle">Cada flor es una pieza de arte. Diseñadas para durar, creadas para inspirar. Flores que nunca se marchitan, solo ganan carácter.</p>
+            <button class="cta-primary">
+                Explorar Colecciones
+                <span class="arrow">→</span>
+            </button>
+        </div>
+        <div class="hero-image">
+            <img src="Captura de pantalla 2026-08-18 183535.png" alt="Arreglo floral premium rojo">
+        </div>
+    </section>
+
+    <!-- Galería -->
+    <section id="colecciones" class="gallery-section">
+        <div class="gallery-intro">
+            <p class="eyebrow">Nuestras Colecciones</p>
+            <h2>Cada arreglo cuenta una historia</h2>
+            <p>Desde tonalidades clásicas hasta composiciones contemporáneas, cada colección representa una interpretación única de la belleza floral. Todas nuestras piezas son creadas con atención obsesiva al detalle, utilizando materiales de primera calidad que garantizan longevidad sin compromiso estético.</p>
+        </div>
+
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="WhatsApp Image 2026-08-18 at 13.54.50.jpeg" alt="Rojo Pasión">
+                <div class="gallery-overlay">
+                    <h3>Rojo Pasión</h3>
+                    <p class="gallery-price">$10.000</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="WhatsApp Image 2026-08-18 at 13.54.44 (1).jpeg" alt="Clásico Bicolor">
+                <div class="gallery-overlay">
+                    <h3>Clásico Bicolor</h3>
+                    <p class="gallery-price">$12.500</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="WhatsApp Image 2026-08-18 at 13.54.44.jpeg" alt="Romance Coral">
+                <div class="gallery-overlay">
+                    <h3>Romance Coral</h3>
+                    <p class="gallery-price">$25.000</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="Captura de pantalla 2026-08-18 183509.png" alt="Elegancia Sofisticada">
+                <div class="gallery-overlay">
+                    <h3>Elegancia Sofisticada</h3>
+                    <p class="gallery-price">$25.000</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="WhatsApp Image 2026-08-18 at 13.54.45.jpeg" alt="Serenidad Azul">
+                <div class="gallery-overlay">
+                    <h3>Serenidad Azul</h3>
+                    <p class="gallery-price">$18.000</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="WhatsApp Image 2026-08-18 at 13.54.46.jpeg" alt="Tropical Alegría">
+                <div class="gallery-overlay">
+                    <h3>Tropical Alegría</h3>
+                    <p class="gallery-price">$15.000</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="Captura de pantalla 2026-08-18 183602.png" alt="Osito Gruñonsito">
+                <div class="gallery-overlay">
+                    <h3>Osito Gruñonsito</h3>
+                    <p class="gallery-price"></p>
+                </div>
+            </div>
+              <div class="gallery-item">
+                <img src="Captura de pantalla 2026-08-18 183520.png" alt="romance floral">
+                <div class="gallery-overlay">
+                    <h3>Osito Gruñonsito</h3>
+                    <p class="gallery-price"></p>
+                </div>
+            </div>
+
+        </div>
+     
+    </section>
+
+    <!-- Filosofía -->
+    <section id="filosofia" class="philosophy">
+        <div class="philosophy-content">
+            <div class="philosophy-text">
+                <p class="eyebrow">Nuestra Filosofía</p>
+                <h2>Belleza sin caducidad</h2>
+                <p>La naturaleza inspira, pero nosotros evolucionamos. Nuestros arreglos florales no son réplicas: son reinterpretaciones de la perfección botánica con la ventaja de la eternidad. Cada pétalo, cada tallo, cada detalle es una decisión deliberada de diseño.</p>
+                
+                <div class="philosophy-values">
+                    <div class="value-item">
+                        <p class="eyebrow">Precisión</p>
+                        <h3>Cada detalle importa</h3>
+                        <p>Trabajamos con tolerancias de milímetros. La perfección no es accidental.</p>
+                    </div>
+                    <div class="value-item">
+                        <p class="eyebrow">Longevidad</p>
+                        <h3>Años, no días</h3>
+                        <p>Diseñados para perdurar. Tus momentos especiales merecen recordatorios eternos.</p>
+                    </div>
+                    <div class="value-item">
+                        <p class="eyebrow">Distinción</p>
+                        <h3>Sin compromisos</h3>
+                        <p>Exclusividad en cada arreglo. No producimos en masa, creamos en curación.</p>
+                    </div>
+                    <div class="value-item">
+                        <p class="eyebrow">Estética</p>
+                        <h3>Belleza intencional</h3>
+                        <p>Cada colección es una declaración de tu gusto y sensibilidad.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="philosophy-image">
+                <img src="Captura de pantalla 2026-08-18 183452.png" alt="Detalles de diseño floral">
+            </div>
+        </div>
+    </section>
+
+    <!-- Proceso -->
+    <section id="proceso" class="process">
+        <p class="eyebrow" style="text-align: center;">Cómo Trabajamos</p>
+        <h2 style="text-align: center;">Tres pasos hacia la perfección</h2>
+        <div class="process-grid">
+            <div class="process-step reveal">
+                <div class="process-number">01</div>
+                <h3>Consulta Curatoría</h3>
+                <p>Entendemos tu visión. Analizamos el espacio, la ocasión, tus preferencias estéticas. Este diálogo es el corazón de nuestro proceso.</p>
+            </div>
+            <div class="process-step reveal">
+                <div class="process-number">02</div>
+                <h3>Diseño Personalizado</h3>
+                <p>Creamos tu arreglo único. Seleccionamos materiales, tonos y composición específicamente para ti. Cada pieza es una obra irrepetible.</p>
+            </div>
+            <div class="process-step reveal">
+                <div class="process-number">03</div>
+                <h3>Entrega Ceremonial</h3>
+                <p>Tu arreglo llega en perfecto estado. Embalado como una joya. Acompañado de instrucciones de conservación que durarán décadas.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonios -->
+    <section class="testimonials">
+        <p class="eyebrow" style="text-align: center;">Lo Que Dicen</p>
+        <h2 style="text-align: center;">Testimonios de nuestros clientes</h2>
+        <div class="testimonial-grid">
+            <div class="testimonial reveal">
+                <p>"No es sólo un arreglo floral. Es una decisión consciente de mantener la belleza en mi espacio. Han pasado dos años y aún luce impecable."</p>
+                <div class="testimonial-author">Catalina M.</div>
+                <div class="testimonial-role">Diseñadora de Interiores</div>
+            </div>
+            <div class="testimonial reveal">
+                <p>"Regalé uno en nuestro aniversario. El gesto fue tan significativo como el objeto. Ella lo tiene en su escritorio desde hace tres años."</p>
+                <div class="testimonial-author">Roberto V.</div>
+                <div class="testimonial-role">Abogado</div>
+            </div>
+            <div class="testimonial reveal">
+                <p>"Perfectas para eventos corporativos. Elegantes, duraderas, sin la preocupación de mantenimiento. Ahora son parte de nuestro protocolo."</p>
+                <div class="testimonial-author">Andrea L.</div>
+                <div class="testimonial-role">Directora de Eventos</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Final -->
+    <section id="contacto" class="cta-section">
+        <h2>Listo para tu próximo arreglo atemporal</h2>
+        <p style="color: #d0d0d0; margin-bottom: 2.5rem;">Contáctanos para una consulta de curatoría personalizada. Sin presiones. Solo conversaciones sobre belleza.</p>
+        <button class="cta-secondary">
+            Solicitar Consulta
+            <span class="arrow">→</span>
+        </button>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>Flores Eternas © 2026. Precisión Botánica, Eternidad Garantizada.</p>
+        <p style="margin-top: 1rem; font-size: 0.85rem;">
+            <a href="#">Instagram</a> · 
+            <a href="#">WhatsApp</a> · 
+            <a href="#">Correo</a>
+        </p>
+    </footer>
+
+    <script>
+        // Scroll reveal animations
+        const revealElements = document.querySelectorAll('.reveal');
+
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        revealElements.forEach(el => observer.observe(el));
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

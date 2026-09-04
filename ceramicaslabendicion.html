@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cerámica La Bendición — Taller y sala de ventas</title>
+<meta name="description" content="Figuras de yeso y cemento blanco hechas y pintadas a mano: Budas, vírgenes, santos, Ganesh, leones y monjes. Sets para pintar tu propia pieza.">
+<meta name="theme-color" content="#14112A">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,100..900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --yeso: #F3EFE6;
+    --yeso-alta: #FBF9F4;
+    --yeso-sombra: #E3DACB;
+    --tierra: #241C15;
+    --tierra-suave: #55493E;
+    --oro: #C79A44;
+    --oro-vivo: #E7B84E;
+    --bronce: #8B5A2B;
+    --indigo: #2A2450;
+    --indigo-profundo: #14112A;
+    --incienso: #A63B2D;
+    --linea: rgba(36, 28, 21, 0.12);
+    --linea-clara: rgba(251, 249, 244, 0.16);
+
+    --fuente-display: 'Fraunces', Georgia, serif;
+    --fuente-cuerpo: 'Inter', -apple-system, sans-serif;
+    --fuente-mono: 'JetBrains Mono', 'Courier New', monospace;
+
+    --transicion: 0.35s ease;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--fuente-cuerpo);
+    background: var(--yeso);
+    color: var(--tierra);
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; cursor: pointer; border: none; background: none; font-size: 1rem; }
+  ul, ol { list-style: none; }
+
+  #categorias, #oficio, #catalogo, #personaliza, #visitanos { scroll-margin-top: 78px; }
+
+  :focus-visible { outline: 3px solid var(--incienso); outline-offset: 3px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* ---------- NAV ---------- */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.1rem clamp(1.25rem, 4vw, 3rem);
+    background: rgba(20, 17, 42, 0.72);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  .nav__brand { display: flex; align-items: center; gap: 0.6rem; }
+  .nav__marca-svg { width: 26px; height: 26px; flex-shrink: 0; }
+  .nav__brand-text {
+    font-family: var(--fuente-display); font-weight: 800; font-size: 1.05rem;
+    letter-spacing: 0.04em; color: var(--yeso-alta); line-height: 1.1;
+  }
+  .nav__brand-text span { display: block; font-family: var(--fuente-mono); font-size: 0.6rem; font-weight: 400; letter-spacing: 0.14em; color: var(--oro-vivo); text-transform: uppercase; margin-top: 2px; }
+  .nav__links { display: flex; align-items: center; gap: clamp(0.9rem, 2.6vw, 1.9rem); }
+  .nav__links a {
+    font-size: 0.76rem; letter-spacing: 0.045em; text-transform: uppercase;
+    color: rgba(251, 249, 244, 0.8); transition: color var(--transicion);
+    padding-bottom: 3px; border-bottom: 1px solid transparent;
+  }
+  .nav__links a:hover, .nav__links a.is-active { color: var(--oro-vivo); border-color: var(--oro-vivo); }
+  .nav__links a.nav__cta {
+    color: var(--indigo-profundo); background: var(--oro-vivo); padding: 0.55rem 1rem;
+    border-radius: 2px; border-bottom: none; font-weight: 600;
+  }
+  .nav__links a.nav__cta:hover { background: var(--yeso-alta); color: var(--indigo-profundo); }
+  .nav__toggle { display: none; }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    position: relative; min-height: 100vh; display: flex; align-items: flex-end;
+    color: var(--yeso-alta); overflow: hidden; padding: 6rem clamp(1.25rem, 5vw, 4rem) clamp(3rem, 7vw, 5.5rem);
+  }
+  .hero__foto { position: absolute; inset: 0; z-index: 0; }
+  .hero__foto img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
+  .hero__velo {
+    position: absolute; inset: 0; z-index: 1;
+    background:
+      linear-gradient(180deg, rgba(20,17,42,0.55) 0%, rgba(20,17,42,0.55) 30%, rgba(20,17,42,0.88) 78%, var(--indigo-profundo) 100%),
+      linear-gradient(90deg, rgba(20,17,42,0.5) 0%, rgba(20,17,42,0.1) 45%, rgba(20,17,42,0.1) 55%, rgba(20,17,42,0.5) 100%);
+  }
+  .hero__motas { position: absolute; inset: 0; z-index: 2; }
+  .mota {
+    position: absolute; bottom: -10px; left: var(--x);
+    width: 4px; height: 4px; border-radius: 50%;
+    background: var(--oro-vivo);
+    box-shadow: 0 0 7px 2px rgba(231, 184, 78, 0.55);
+    animation: flotar var(--dur) ease-in var(--delay) infinite; opacity: 0;
+  }
+  @keyframes flotar {
+    0% { transform: translateY(0) scale(1); opacity: 0; }
+    12% { opacity: 0.9; }
+    85% { opacity: 0.35; }
+    100% { transform: translateY(-85vh) translateX(14px) scale(0.3); opacity: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) { .mota { display: none; } }
+  .hero__contenido { position: relative; z-index: 3; max-width: 720px; }
+  .hero__eyebrow {
+    font-family: var(--fuente-mono); font-size: 0.78rem; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--oro-vivo); margin-bottom: 1.1rem; display: flex; align-items: center; gap: 0.6rem;
+  }
+  .hero__eyebrow::before { content: ''; width: 26px; height: 1px; background: var(--oro-vivo); display: inline-block; }
+  .hero__title {
+    font-family: var(--fuente-display); font-weight: 800; font-size: clamp(2.6rem, 6.4vw, 4.6rem);
+    letter-spacing: 0.005em; line-height: 1.02; text-shadow: 0 0 70px rgba(199, 154, 68, 0.3);
+  }
+  .hero__title em { font-style: italic; color: var(--oro-vivo); }
+  .hero__sub {
+    font-size: clamp(1.02rem, 1.6vw, 1.22rem); color: rgba(251, 249, 244, 0.86);
+    margin-top: 1.3rem; max-width: 46ch;
+  }
+  .hero__acciones { display: flex; flex-wrap: wrap; gap: 1.1rem; margin-top: 2.3rem; align-items: center; }
+  .hero__cta-principal {
+    font-family: var(--fuente-mono); font-size: 0.85rem; letter-spacing: 0.05em; text-transform: uppercase;
+    background: var(--oro-vivo); color: var(--indigo-profundo); padding: 0.9rem 1.6rem; font-weight: 600;
+    transition: background var(--transicion), transform var(--transicion);
+  }
+  .hero__cta-principal:hover { background: var(--yeso-alta); transform: translateY(-2px); }
+  .hero__cta-secundaria {
+    font-family: var(--fuente-mono); font-size: 0.85rem; letter-spacing: 0.05em; color: var(--yeso-alta);
+    border-bottom: 1px solid rgba(251,249,244,0.4); padding-bottom: 4px;
+    transition: border-color var(--transicion), color var(--transicion);
+  }
+  .hero__cta-secundaria:hover { color: var(--oro-vivo); border-color: var(--oro-vivo); }
+
+  /* ---------- COMPARTIDO ---------- */
+  .section__inner { max-width: 1120px; margin-inline: auto; }
+  .section__inner--narrow { max-width: 640px; }
+  .section__eyebrow {
+    font-family: var(--fuente-mono); font-size: 0.78rem; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--incienso); margin-bottom: 0.7rem; display: flex; align-items: center; gap: 0.55rem;
+  }
+  .section__eyebrow::before { content: ''; width: 22px; height: 1px; background: var(--incienso); display: inline-block; }
+  .oficio .section__eyebrow, .personaliza .section__eyebrow { color: var(--oro-vivo); }
+  .oficio .section__eyebrow::before, .personaliza .section__eyebrow::before { background: var(--oro-vivo); }
+  .section__title {
+    font-family: var(--fuente-display); font-weight: 800; font-size: clamp(2rem, 4.4vw, 3.1rem);
+    margin-bottom: 1.1rem; line-height: 1.08;
+  }
+  .section__intro { color: var(--tierra-suave); max-width: 62ch; margin-bottom: 3rem; font-size: 1.03rem; }
+  .reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+  /* ---------- BIENVENIDA ---------- */
+  .bienvenida { background: var(--yeso); padding: clamp(4rem, 8vw, 6.5rem) clamp(1.25rem, 5vw, 4rem); }
+  .bienvenida__grid {
+    display: grid; grid-template-columns: 0.85fr 1.15fr; gap: clamp(2rem, 5vw, 4rem); align-items: center;
+  }
+  .bienvenida__foto { position: relative; }
+  .bienvenida__foto img { border-radius: 3px; box-shadow: 0 24px 50px rgba(36,28,21,0.16); }
+  .bienvenida__foto-tag {
+    position: absolute; bottom: -1.1rem; left: -1.1rem; background: var(--indigo-profundo); color: var(--yeso-alta);
+    font-family: var(--fuente-mono); font-size: 0.72rem; letter-spacing: 0.05em; padding: 0.65rem 1rem;
+    max-width: 210px; border-left: 3px solid var(--oro-vivo);
+  }
+  .bienvenida__texto p { color: var(--tierra-suave); margin-bottom: 1.2rem; max-width: 56ch; }
+  .bienvenida__texto p:last-of-type { margin-bottom: 0; }
+  .bienvenida__ubica {
+    display: flex; align-items: center; gap: 0.85rem; margin-top: 1.8rem; padding: 1rem 1.2rem;
+    background: var(--yeso-alta); border-left: 3px solid var(--incienso); font-size: 0.92rem;
+  }
+  .bienvenida__ubica svg { flex-shrink: 0; color: var(--incienso); width: 20px; height: 20px; }
+  .bienvenida__prueba {
+    margin-top: 2.2rem; display: flex; gap: 1rem; align-items: center;
+    background: var(--yeso-alta); border: 1px solid var(--linea); padding: 0.9rem;
+  }
+  .bienvenida__prueba img { width: 76px; height: 76px; object-fit: cover; border-radius: 2px; flex-shrink: 0; }
+  .bienvenida__prueba p { font-size: 0.86rem; color: var(--tierra-suave); margin: 0; }
+  .bienvenida__prueba strong { display: block; font-family: var(--fuente-mono); font-size: 0.68rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--incienso); margin-bottom: 0.25rem; }
+
+  /* ---------- CATEGORIAS ---------- */
+  .categorias { background: var(--yeso-sombra); padding: clamp(4rem, 8vw, 6.5rem) clamp(1.25rem, 5vw, 4rem); }
+  .categorias__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.6rem; }
+  .cat-card {
+    position: relative; aspect-ratio: 4 / 5; overflow: hidden; border-radius: 3px; cursor: pointer;
+    box-shadow: 0 10px 26px rgba(36,28,21,0.12);
+  }
+  .cat-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+  .cat-card::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(20,17,42,0) 40%, rgba(20,17,42,0.92) 100%);
+  }
+  .cat-card:hover img { transform: scale(1.06); }
+  .cat-card__info { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; padding: 1.3rem 1.2rem; color: var(--yeso-alta); }
+  .cat-card__info span {
+    display: block; font-family: var(--fuente-mono); font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--oro-vivo); margin-bottom: 0.35rem;
+  }
+  .cat-card__info h3 { font-family: var(--fuente-display); font-weight: 700; font-size: 1.28rem; margin-bottom: 0.4rem; }
+  .cat-card__info p { font-size: 0.83rem; color: rgba(251,249,244,0.82); max-width: 30ch; }
+
+  /* ---------- TRANSFORMA (pieza clave) ---------- */
+  .transforma {
+    background: var(--indigo-profundo); color: var(--yeso-alta);
+    padding: clamp(4rem, 8vw, 6.5rem) clamp(1.25rem, 5vw, 4rem);
+  }
+  .transforma .section__eyebrow { color: var(--oro-vivo); }
+  .transforma .section__eyebrow::before { background: var(--oro-vivo); }
+  .transforma .section__title { color: var(--yeso-alta); }
+  .transforma .section__intro { color: rgba(251,249,244,0.72); }
+  .transforma__grid { display: grid; grid-template-columns: 1fr 0.85fr; gap: clamp(2rem, 5vw, 3.5rem); align-items: center; }
+  .transforma__media {
+    position: relative; width: 100%; aspect-ratio: 4 / 3; overflow: hidden; border-radius: 4px;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.4); user-select: none; touch-action: pan-y;
+  }
+  .transforma__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .transforma__despues { position: absolute; inset: 0; overflow: hidden; clip-path: inset(0 50% 0 0); }
+  .transforma__despues img { width: 100%; height: 100%; object-fit: cover; }
+  .transforma__linea {
+    position: absolute; top: 0; bottom: 0; left: 50%; width: 3px; background: var(--yeso-alta);
+    transform: translateX(-50%); box-shadow: 0 0 12px rgba(0,0,0,0.4); pointer-events: none; z-index: 3;
+  }
+  .transforma__manija {
+    position: absolute; top: 50%; left: 50%; width: 46px; height: 46px; border-radius: 50%;
+    background: var(--yeso-alta); color: var(--indigo-profundo); display: flex; align-items: center; justify-content: center;
+    transform: translate(-50%, -50%); pointer-events: none; z-index: 4; font-size: 1.1rem; box-shadow: 0 6px 16px rgba(0,0,0,0.35);
+  }
+  .transforma__range {
+    position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; z-index: 5;
+    -webkit-appearance: none; appearance: none;
+  }
+  .transforma__etiqueta {
+    position: absolute; bottom: 1rem; z-index: 3; font-family: var(--fuente-mono); font-size: 0.7rem;
+    letter-spacing: 0.08em; text-transform: uppercase; background: rgba(20,17,42,0.75); color: var(--yeso-alta);
+    padding: 0.4rem 0.7rem; pointer-events: none;
+  }
+  .transforma__etiqueta--izq { left: 1rem; }
+  .transforma__etiqueta--der { right: 1rem; }
+  .transforma__texto p { color: rgba(251,249,244,0.78); margin-bottom: 1.1rem; max-width: 46ch; }
+  .transforma__lista { margin-top: 1.6rem; display: flex; flex-direction: column; gap: 0.9rem; }
+  .transforma__lista li { display: flex; gap: 0.7rem; font-size: 0.92rem; color: rgba(251,249,244,0.85); }
+  .transforma__lista li::before { content: '◆'; color: var(--oro-vivo); font-size: 0.6rem; margin-top: 0.35rem; flex-shrink: 0; }
+
+  /* ---------- OFICIO ---------- */
+  .oficio {
+    position: relative; color: var(--yeso-alta); padding: clamp(4rem, 8vw, 6.5rem) clamp(1.25rem, 5vw, 4rem);
+    background: linear-gradient(180deg, var(--tierra) 0%, #362A1D 45%, var(--bronce) 100%);
+    overflow: hidden;
+  }
+  .oficio__foto-marca {
+    position: absolute; right: -6%; top: 8%; width: 46%; max-width: 460px; opacity: 0.16;
+    filter: grayscale(1) contrast(1.1); pointer-events: none;
+  }
+  .oficio__grid { position: relative; z-index: 1; display: grid; grid-template-columns: 0.9fr 1.1fr; gap: clamp(2rem, 5vw, 4rem); }
+  .oficio .section__intro { color: rgba(251,249,244,0.72); }
+  .pasos { display: flex; flex-direction: column; gap: 1.9rem; }
+  .paso {
+    display: grid; grid-template-columns: 3.2rem 1fr; gap: 1.3rem; align-items: start;
+    padding-bottom: 1.8rem; border-bottom: 1px solid var(--linea-clara);
+  }
+  .paso:last-child { border-bottom: none; padding-bottom: 0; }
+  .paso__num { font-family: var(--fuente-mono); font-size: 1rem; color: var(--oro-vivo); }
+  .paso h3 { font-family: var(--fuente-display); font-weight: 700; font-size: 1.28rem; margin-bottom: 0.4rem; }
+  .paso p { color: rgba(251,249,244,0.72); max-width: 58ch; font-size: 0.94rem; }
+
+  /* ---------- CATALOGO ---------- */
+  .catalogo { background: var(--yeso); padding: clamp(4rem, 8vw, 6.5rem) clamp(1.25rem, 5vw, 4rem); }
+  .catalogo .section__eyebrow { color: var(--bronce); }
+  .catalogo .section__eyebrow::before { background: var(--bronce); }
+  .catalogo__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.8rem; }
+  .pieza {
+    background: var(--yeso-alta); border: 1px solid var(--linea); border-top: 3px solid var(--bronce);
+    overflow: hidden; transition: transform 0.4s ease, box-shadow 0.35s ease;
+  }
+  .pieza:hover { transform: translateY(-4px); box-shadow: 0 16px 32px rgba(36,28,21,0.14); }
+  .pieza__foto { aspect-ratio: 4 / 3; overflow: hidden; cursor: pointer; }
+  .pieza__foto img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+  .pieza:hover .pieza__foto img { transform: scale(1.05); }
+  .pieza__cuerpo { padding: 1.5rem; }
+  .pieza h3 { font-family: var(--fuente-display); font-weight: 700; font-size: 1.28rem; margin-bottom: 0.55rem; }
+  .pieza__desc { color: var(--tierra-suave); margin-bottom: 1.2rem; font-size: 0.92rem; }
+  .pieza__specs {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem 1rem;
+    font-family: var(--fuente-mono); font-size: 0.78rem; border-top: 1px solid var(--linea); padding-top: 1rem;
+  }
+  .pieza__specs dt { color: var(--tierra-suave); text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.64rem; margin-bottom: 0.15rem; }
+  .pieza__specs dd { color: var(--tierra); font-weight: 500; }
+  .catalogo__nota { margin-top: 2rem; font-size: 0.88rem; color: var(--tierra-suave); text-align: center; }
+
+  /* ---------- PERSONALIZA ---------- */
+  .personaliza { background: var(--indigo); color: var(--yeso-alta); padding: clamp(4rem, 8vw, 6.5rem) clamp(1.25rem, 5vw, 4rem); }
+  .personaliza .section__title { color: var(--yeso-alta); }
+  .personaliza__grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 3.5rem); align-items: center; }
+  .personaliza__texto p { color: rgba(251,249,244,0.78); max-width: 54ch; margin-bottom: 1.6rem; }
+  .kit-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.1rem; }
+  .kit-item {
+    background: rgba(251,249,244,0.06); border: 1px solid var(--linea-clara); padding: 1.1rem 0.9rem;
+    text-align: center; transition: background var(--transicion);
+  }
+  .kit-item:hover { background: rgba(251,249,244,0.12); }
+  .kit-item svg { width: 26px; height: 26px; color: var(--oro-vivo); margin-inline: auto 0.6rem auto; display: block; }
+  .kit-item span { display: block; font-size: 0.76rem; margin-top: 0.55rem; color: rgba(251,249,244,0.85); }
+  .personaliza__foto { position: relative; }
+  .personaliza__foto img { border-radius: 3px; box-shadow: 0 24px 50px rgba(0,0,0,0.35); }
+  .personaliza__foto-tag {
+    position: absolute; top: -1rem; right: -1rem; background: var(--oro-vivo); color: var(--indigo-profundo);
+    font-family: var(--fuente-mono); font-size: 0.72rem; font-weight: 600; padding: 0.6rem 0.9rem; max-width: 200px;
+  }
+
+  /* ---------- VISITANOS / CONTACTO ---------- */
+  .visitanos { background: var(--yeso-sombra); padding: clamp(4rem, 8vw, 6.5rem) clamp(1.25rem, 5vw, 4rem); }
+  .visitanos__grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2.5rem, 6vw, 5rem); }
+  .visitanos__foto { border-radius: 3px; overflow: hidden; box-shadow: 0 20px 40px rgba(36,28,21,0.16); margin-bottom: 1.6rem; }
+  .visitanos__foto img { width: 100%; aspect-ratio: 16/11; object-fit: cover; }
+  .visitanos__dato { display: flex; gap: 0.85rem; margin-bottom: 1.1rem; font-size: 0.94rem; color: var(--tierra-suave); }
+  .visitanos__dato svg { flex-shrink: 0; width: 20px; height: 20px; color: var(--incienso); margin-top: 0.1rem; }
+  .visitanos__dato strong { color: var(--tierra); display: block; font-size: 0.98rem; margin-bottom: 0.1rem; }
+  .contacto__intro { color: var(--tierra-suave); margin-bottom: 1.8rem; max-width: 48ch; }
+  .form__row { margin-bottom: 1.4rem; display: flex; flex-direction: column; gap: 0.4rem; }
+  .form__row label {
+    font-family: var(--fuente-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--tierra-suave);
+  }
+  .form__row input, .form__row select, .form__row textarea {
+    font-family: var(--fuente-cuerpo); font-size: 1rem; padding: 0.7rem 0;
+    border: none; border-bottom: 1.5px solid rgba(36,28,21,0.25);
+    background: transparent; color: var(--tierra); transition: border-color var(--transicion); resize: vertical;
+  }
+  .form__row input:focus, .form__row select:focus, .form__row textarea:focus { border-color: var(--incienso); }
+  .form__submit {
+    font-family: var(--fuente-mono); font-size: 0.85rem; letter-spacing: 0.05em; text-transform: uppercase;
+    background: var(--indigo-profundo); color: var(--yeso-alta); padding: 0.9rem 2rem; margin-top: 0.4rem;
+    transition: background var(--transicion);
+  }
+  .form__submit:hover { background: var(--incienso); }
+  .form__gracias { font-family: var(--fuente-mono); color: var(--incienso); font-size: 0.92rem; }
+
+  /* ---------- FOOTER ---------- */
+  .footer { background: var(--indigo-profundo); color: rgba(251,249,244,0.68); padding: 3rem 1.5rem 2.4rem; text-align: center; }
+  .footer__brand { font-family: var(--fuente-display); font-weight: 800; font-size: 1.15rem; letter-spacing: 0.04em; color: var(--yeso-alta); }
+  .footer__linea { margin: 0.7rem 0 1.4rem; font-size: 0.88rem; }
+  .footer__links { display: flex; justify-content: center; gap: 1.4rem; font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.04em; flex-wrap: wrap; }
+  .footer__links a { transition: color var(--transicion); }
+  .footer__links a:hover { color: var(--oro-vivo); }
+
+  /* ---------- LIGHTBOX ---------- */
+  .lightbox {
+    position: fixed; inset: 0; z-index: 500; background: rgba(20,17,42,0.92);
+    display: flex; align-items: center; justify-content: center; padding: 2rem;
+    opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+  }
+  .lightbox.is-open { opacity: 1; pointer-events: auto; }
+  .lightbox__caja { max-width: 800px; width: 100%; }
+  .lightbox__caja img { width: 100%; border-radius: 3px; max-height: 72vh; object-fit: cover; }
+  .lightbox__info { color: var(--yeso-alta); margin-top: 1rem; }
+  .lightbox__info span { font-family: var(--fuente-mono); font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--oro-vivo); }
+  .lightbox__info h3 { font-family: var(--fuente-display); font-size: 1.4rem; margin: 0.3rem 0 0.4rem; }
+  .lightbox__info p { color: rgba(251,249,244,0.75); font-size: 0.92rem; max-width: 56ch; }
+  .lightbox__cerrar {
+    position: absolute; top: 1.5rem; right: 1.8rem; color: var(--yeso-alta); font-size: 1.6rem;
+    width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--linea-clara); border-radius: 50%; transition: background var(--transicion);
+  }
+  .lightbox__cerrar:hover { background: rgba(251,249,244,0.12); }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 900px) {
+    .bienvenida__grid, .oficio__grid, .personaliza__grid, .visitanos__grid, .transforma__grid { grid-template-columns: 1fr; }
+    .categorias__grid { grid-template-columns: repeat(2, 1fr); }
+    .oficio__foto-marca { display: none; }
+    .kit-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 640px) {
+    .nav__links { gap: 0.7rem; }
+    .nav__links a:not(.nav__cta) { display: none; }
+    .categorias__grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .kit-grid { grid-template-columns: repeat(2, 1fr); }
+    .bienvenida__prueba { flex-direction: column; align-items: flex-start; }
+    .paso { grid-template-columns: 2.4rem 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="#" class="nav__brand">
+    <svg class="nav__marca-svg" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M16 3C11 9 8 13.5 8 18.5C8 23.7 11.6 28 16 28C20.4 28 24 23.7 24 18.5C24 13.5 21 9 16 3Z" stroke="#E7B84E" stroke-width="1.6"/>
+      <circle cx="16" cy="19" r="3.4" stroke="#E7B84E" stroke-width="1.4"/>
+    </svg>
+    <span class="nav__brand-text">Cerámica La Bendición<span>Taller y sala de ventas</span></span>
+  </a>
+  <div class="nav__links">
+    <a href="#categorias" data-nav>Categorías</a>
+    <a href="#oficio" data-nav>El oficio</a>
+    <a href="#catalogo" data-nav>Catálogo</a>
+    <a href="#personaliza" data-nav>Personaliza</a>
+    <a href="#visitanos" class="nav__cta">Visítanos</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero__foto"><img src="ceramica_la_bendicion_cartel_2.png" alt="Fachada del taller Cerámica La Bendición, con letrero de bienvenida"></div>
+  <div class="hero__velo"></div>
+  <div class="hero__motas" aria-hidden="true">
+    <span class="mota" style="--x:8%; --dur:8s; --delay:0s;"></span>
+    <span class="mota" style="--x:18%; --dur:9.4s; --delay:1.2s;"></span>
+    <span class="mota" style="--x:29%; --dur:7s; --delay:2.6s;"></span>
+    <span class="mota" style="--x:41%; --dur:8.8s; --delay:0.7s;"></span>
+    <span class="mota" style="--x:54%; --dur:7.6s; --delay:3.1s;"></span>
+    <span class="mota" style="--x:66%; --dur:9.8s; --delay:1.9s;"></span>
+    <span class="mota" style="--x:77%; --dur:7.3s; --delay:0.4s;"></span>
+    <span class="mota" style="--x:88%; --dur:9s; --delay:2.9s;"></span>
+    <span class="mota" style="--x:95%; --dur:7.9s; --delay:1.5s;"></span>
+  </div>
+  <div class="hero__contenido">
+    <p class="hero__eyebrow">Taller y sala de ventas</p>
+    <h1 class="hero__title">Del yeso blanco<br>a la pieza <em>bendecida</em></h1>
+    <p class="hero__sub">Figuras de yeso y cemento blanco, moldeadas y pintadas a mano, una por una. Budas, vírgenes, santos, Ganesh, leones y monjes — dentro del Centro Comercial.</p>
+    <div class="hero__acciones">
+      <a href="#catalogo" class="hero__cta-principal">Ver catálogo</a>
+      <a href="#visitanos" class="hero__cta-secundaria">Cómo llegar ↓</a>
+    </div>
+  </div>
+</section>
+
+<section class="bienvenida" id="bienvenida">
+  <div class="section__inner">
+    <div class="bienvenida__grid">
+      <div class="bienvenida__foto reveal">
+        <img src="WhatsApp Image 2026-08-04 at 08.09.32.jpeg" alt="Búho de yeso con cartel que dice Bienvenido, a la entrada del taller">
+        <div class="bienvenida__foto-tag">El primero en recibirte al entrar a la sala de ventas.</div>
+      </div>
+      <div class="bienvenida__texto reveal">
+        <p class="section__eyebrow">Bienvenido al taller</p>
+        <h2 class="section__title">Una tienda, cientos de figuras</h2>
+        <p>Encontrarás figuras de Buda, vírgenes, santos, ángeles, leones y elefantes: piezas en yeso y cemento blanco, pintadas o al natural, hechas a mano y terminadas con dedicación, una a la vez.</p>
+        <p>También tenemos pinturas acrílicas y metálicas, selladores, guantes quirúrgicos, pinceles, esponjas, pulseras, collares, inciensos, velas y otros artículos para completar tu pieza o tu altar.</p>
+        <div class="bienvenida__ubica">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 22s7-7.4 7-12.5A7 7 0 0 0 5 9.5C5 14.6 12 22 12 22Z" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="9.5" r="2.6" stroke="currentColor" stroke-width="1.6"/></svg>
+          <span>Local de esculturas de yeso, dentro del Centro Comercial.</span>
+        </div>
+        <div class="bienvenida__prueba">
+          <img src="ceramica_la_bendicion_cartel_1.png" alt="Letrero del local con el listado completo de productos disponibles">
+          <p><strong>Tal como lo dice nuestro letrero</strong>Figuras de yeso y cemento blanco, pintadas o al natural, más todo lo necesario para pintar tus propias piezas en casa.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="categorias" id="categorias">
+  <div class="section__inner">
+    <p class="section__eyebrow">Lo que vas a encontrar</p>
+    <h2 class="section__title">Categorías</h2>
+    <p class="section__intro">Cada estante tiene su propio mundo. Toca una categoría para ver más de cerca cómo se ven terminadas.</p>
+    <div class="categorias__grid">
+      <article class="cat-card reveal" data-lightbox data-img="img/buda-dorado.jpg" data-titulo="Budas" data-desc="Figuras de Buda en yeso, terminadas en dorado, plata y bronce, con acabado de altar.">
+        <img src="WhatsApp Image 2026-08-04 at 08.09.26 - copia.jpeg" alt="Figura de Buda en yeso con acabado dorado">
+        <div class="cat-card__info"><span>Meditación</span><h3>Budas</h3><p>Dorados, plateados o al natural.</p></div>
+      </article>
+      <article class="cat-card reveal" data-lightbox data-img="img/nacimiento-virgenes.jpg" data-titulo="Vírgenes, santos y nacimientos" data-desc="Virgen de Guadalupe, Virgen de Lourdes, Reyes Magos y pesebres completos, pintados a mano.">
+        <img src="WhatsApp Image 2026-08-04 at 08.09.17 - copia.jpeg" alt="Figuras de vírgenes y pesebre pintadas a mano">
+        <div class="cat-card__info"><span>Devoción</span><h3>Vírgenes y santos</h3><p>Incluye pesebres completos.</p></div>
+      </article>
+      <article class="cat-card reveal" data-lightbox data-img="img/altar-santos-variados.jpg" data-titulo="Devociones y protección" data-desc="Sagrado Corazón, Santa Muerte, ángeles y otras figuras para altares personales.">
+        <img src="WhatsApp Image 2026-08-04 at 08.09.37.jpeg" alt="Figuras devocionales variadas sobre un estante">
+        <div class="cat-card__info"><span>Altar personal</span><h3>Devociones</h3><p>Protección y fe, en yeso.</p></div>
+      </article>
+      <article class="cat-card reveal" data-lightbox data-img="img/ganesh-grande-blanco.jpg" data-titulo="Ganesh y deidades" data-desc="Ganesh en yeso blanco al natural, con base de loto, listo para pintar o para exhibir tal cual.">
+        <img src="WhatsApp Image 2026-08-04 at 08.09.29.jpeg" alt="Figura grande de Ganesh en yeso blanco">
+        <div class="cat-card__info"><span>Prosperidad</span><h3>Ganesh</h3><p>Al natural o para pintar.</p></div>
+      </article>
+      <article class="cat-card reveal" data-lightbox data-img="img/leones-completos.jpg" data-titulo="Guardianes: leones" data-desc="Parejas de leones en cemento blanco, pensados para entradas, portones y jardines.">
+        <img src="WhatsApp Image 2026-08-04 at 08.09.24.jpeg" alt="Pareja de leones de cemento blanco en la entrada del taller">
+        <div class="cat-card__info"><span>Entradas y jardines</span><h3>Leones</h3><p>Guardianes en pareja.</p></div>
+      </article>
+      <article class="cat-card reveal" data-lightbox data-img="img/monjes-bebes-blancos.jpg" data-titulo="Monjes y figuras infantiles" data-desc="Los clásicos monjes 'no veo, no oigo, no hablo' y monjes bebés en oración, en blanco natural o pintados.">
+        <img src="WhatsApp Image 2026-08-04 at 08.09.35.jpeg" alt="Monjes bebés de yeso blanco en oración">
+        <div class="cat-card__info"><span>Decoración</span><h3>Monjes y niños</h3><p>En blanco natural o pintados.</p></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="transforma">
+  <div class="section__inner">
+    <div class="transforma__grid">
+      <div class="reveal">
+        <p class="section__eyebrow">Así se transforma una pieza</p>
+        <h2 class="section__title">Del molde al color</h2>
+        <div class="transforma__media" id="transformaMedia">
+          <img class="transforma__img" src="WhatsApp Image 2026-08-04 at 08.09.35.jpeg" alt="Figuras en yeso blanco, recién salidas del molde, sin pintar">
+          <div class="transforma__despues" id="transformaDespues">
+            <img class="transforma__img" src="WhatsApp Image 2026-08-04 at 08.09.18 - copia.jpeg" alt="Las mismas figuras de monjes, ya pintadas en acabado metálico dorado, plata y fucsia">
+          </div>
+          <div class="transforma__linea" id="transformaLinea"></div>
+          <div class="transforma__manija" id="transformaManija">↔</div>
+          <span class="transforma__etiqueta transforma__etiqueta--izq">Blanco natural</span>
+          <span class="transforma__etiqueta transforma__etiqueta--der">Pintado a mano</span>
+          <input type="range" min="0" max="100" value="50" class="transforma__range" id="transformaRange" aria-label="Deslizar para comparar la pieza en blanco natural y ya pintada">
+        </div>
+      </div>
+      <div class="transforma__texto reveal">
+        <p>Cada figura sale del molde en yeso blanco, sin color. Desde ahí, en el taller decidimos si queda al natural o si se pinta a mano, pieza por pieza, hasta el acabado que ves en la sala de ventas.</p>
+        <p>Desliza la imagen para comparar el mismo diseño de monjes en su estado blanco natural y ya terminado en pintura metálica.</p>
+        <ul class="transforma__lista">
+          <li>Blanco natural: tal como sale del molde, lista para pintar en casa.</li>
+          <li>Pintado a mano: acabado en dorado, plata, bronce u otros colores metálicos.</li>
+          <li>Ambas versiones están disponibles en la sala de ventas.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="oficio" id="oficio">
+  <img class="oficio__foto-marca" src="WhatsApp Image 2026-08-04 at 08.09.29.jpeg" alt="">
+  <div class="section__inner">
+    <div class="oficio__grid">
+      <div class="reveal">
+        <p class="section__eyebrow">Cinco pasos, hechos a mano</p>
+        <h2 class="section__title">El oficio</h2>
+        <p class="section__intro">Así llega cada pieza desde el molde hasta la sala de ventas.</p>
+      </div>
+      <ol class="pasos">
+        <li class="paso reveal">
+          <span class="paso__num">01</span>
+          <div><h3>Moldear</h3><p>El yeso o el cemento blanco se vierte en el molde y toma la forma de la figura: Buda, virgen, león o monje.</p></div>
+        </li>
+        <li class="paso reveal">
+          <span class="paso__num">02</span>
+          <div><h3>Desmoldar y secar</h3><p>La pieza sale del molde y se deja secar hasta quedar firme, lista para trabajarla.</p></div>
+        </li>
+        <li class="paso reveal">
+          <span class="paso__num">03</span>
+          <div><h3>Pulir</h3><p>Se repasan los bordes y detalles a mano, para que la figura quede lista tanto al natural como para pintar.</p></div>
+        </li>
+        <li class="paso reveal">
+          <span class="paso__num">04</span>
+          <div><h3>Pintar</h3><p>Con pinturas acrílicas o metálicas se da color, dorado o plateado, pincel a pincel.</p></div>
+        </li>
+        <li class="paso reveal">
+          <span class="paso__num">05</span>
+          <div><h3>Sellar</h3><p>Un sellador final protege el color y deja la pieza lista para la venta o para el encargo.</p></div>
+        </li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section class="catalogo" id="catalogo">
+  <div class="section__inner">
+    <p class="section__eyebrow">Algunas piezas del taller</p>
+    <h2 class="section__title">Catálogo</h2>
+    <p class="section__intro">Una muestra de lo que vas a encontrar en la sala de ventas. Todas las piezas se pueden pedir también en blanco natural.</p>
+    <div class="catalogo__grid">
+      <article class="pieza reveal">
+        <div class="pieza__foto" data-lightbox data-img="img/buda-dorado.jpg" data-titulo="Buda Dorado" data-desc="Buda en yeso, pintado a mano en dorado, con base de piedras naturales. Pieza de altar.">
+          <img src="WhatsApp Image 2026-08-04 at 08.09.26 - copia.jpeg" alt="Buda de yeso pintado en dorado, con base de piedras">
+        </div>
+        <div class="pieza__cuerpo">
+          <h3>Buda Dorado</h3>
+          <p class="pieza__desc">Acabado dorado a mano sobre base de piedras naturales. Pieza central para altar o sala.</p>
+          <dl class="pieza__specs">
+            <div><dt>Material</dt><dd>Yeso</dd></div>
+            <div><dt>Acabado</dt><dd>Dorado a mano</dd></div>
+            <div><dt>Uso</dt><dd>Altar / interior</dd></div>
+            <div><dt>Precio</dt><dd>A consultar</dd></div>
+          </dl>
+        </div>
+      </article>
+      <article class="pieza reveal">
+        <div class="pieza__foto" data-lightbox data-img="img/monjes-tres-sabios-color.jpg" data-titulo="Trío de la Sabiduría" data-desc="No veo, no oigo, no hablo — el clásico trío de monjes, en acabado metálico dorado, plata y fucsia.">
+          <img src="WhatsApp Image 2026-08-04 at 08.09.18.jpeg" alt="Trío de monjes en acabado metálico dorado, plata y fucsia">
+        </div>
+        <div class="pieza__cuerpo">
+          <h3>Trío de la Sabiduría</h3>
+          <p class="pieza__desc">Los tres monjes clásicos —no veo, no oigo, no hablo— en pintura metálica.</p>
+          <dl class="pieza__specs">
+            <div><dt>Material</dt><dd>Yeso</dd></div>
+            <div><dt>Acabado</dt><dd>Metálico</dd></div>
+            <div><dt>Uso</dt><dd>Escritorio</dd></div>
+            <div><dt>Precio</dt><dd>A consultar</dd></div>
+          </dl>
+        </div>
+      </article>
+      <article class="pieza reveal">
+        <div class="pieza__foto" data-lightbox data-img="img/ganesh-grande-blanco.jpg" data-titulo="Ganesh de Altar" data-desc="Ganesh grande, en yeso blanco natural, con base de loto y espacio para vela o incienso.">
+          <img src="WhatsApp Image 2026-08-04 at 08.09.29.jpeg" alt="Ganesh grande en yeso blanco natural con base de loto">
+        </div>
+        <div class="pieza__cuerpo">
+          <h3>Ganesh de Altar</h3>
+          <p class="pieza__desc">Base de loto con espacio para vela o incienso. Se entrega al natural o pintado.</p>
+          <dl class="pieza__specs">
+            <div><dt>Material</dt><dd>Yeso</dd></div>
+            <div><dt>Acabado</dt><dd>Natural / a pintar</dd></div>
+            <div><dt>Uso</dt><dd>Entrada / altar</dd></div>
+            <div><dt>Precio</dt><dd>A consultar</dd></div>
+          </dl>
+        </div>
+      </article>
+      <article class="pieza reveal">
+        <div class="pieza__foto" data-lightbox data-img="img/leones-completos.jpg" data-titulo="Pareja de Leones Guardianes" data-desc="Leones de cuerpo completo en cemento blanco, sobre base propia, pensados para portones y jardines.">
+          <img src="WhatsApp Image 2026-08-04 at 08.09.24.jpeg" alt="Pareja de leones de cemento blanco de cuerpo completo">
+        </div>
+        <div class="pieza__cuerpo">
+          <h3>Leones Guardianes</h3>
+          <p class="pieza__desc">Pareja de cuerpo completo, sobre base propia. Ideal para portones y jardines.</p>
+          <dl class="pieza__specs">
+            <div><dt>Material</dt><dd>Cemento blanco</dd></div>
+            <div><dt>Acabado</dt><dd>Natural</dd></div>
+            <div><dt>Uso</dt><dd>Exterior</dd></div>
+            <div><dt>Precio</dt><dd>A consultar</dd></div>
+          </dl>
+        </div>
+      </article>
+      <article class="pieza reveal">
+        <div class="pieza__foto" data-lightbox data-img="img/monje-blanco-negro.jpg" data-titulo="Monje en Negro Brillante" data-desc="El mismo monje en oración, en un acabado lacado negro que contrasta con la túnica blanca al natural.">
+          <img src="WhatsApp Image 2026-08-04 at 08.09.25.jpeg" alt="Monje en oración con acabado negro brillante y túnica blanca">
+        </div>
+        <div class="pieza__cuerpo">
+          <h3>Monje en Negro Brillante</h3>
+          <p class="pieza__desc">Acabado lacado en la piel, contrastado con la túnica en blanco natural.</p>
+          <dl class="pieza__specs">
+            <div><dt>Material</dt><dd>Yeso</dd></div>
+            <div><dt>Acabado</dt><dd>Lacado / natural</dd></div>
+            <div><dt>Uso</dt><dd>Interior</dd></div>
+            <div><dt>Precio</dt><dd>A consultar</dd></div>
+          </dl>
+        </div>
+      </article>
+      <article class="pieza reveal">
+        <div class="pieza__foto" data-lightbox data-img="img/doberman-vigilante.jpg" data-titulo="Doberman Vigilante" data-desc="Doberman de cuerpo completo, con acabado lacado en tono bronce oscuro y collar dorado grabado, sentado en posición de guardia.">
+          <img src="perro.jpeg" alt="Figura de Doberman sentado, con acabado lacado bronce oscuro y collar dorado">
+        </div>
+        <div class="pieza__cuerpo">
+          <h3>Doberman Vigilante</h3>
+          <p class="pieza__desc">Cuerpo completo en posición de guardia, con acabado lacado bronce oscuro y detalle de collar dorado.</p>
+          <dl class="pieza__specs">
+            <div><dt>Material</dt><dd>Yeso</dd></div>
+            <div><dt>Acabado</dt><dd>Lacado bronce</dd></div>
+            <div><dt>Uso</dt><dd>Entrada / interior</dd></div>
+            <div><dt>Precio</dt><dd>A consultar</dd></div>
+          </dl>
+        </div>
+      </article>
+      <article class="pieza reveal">
+        <div class="pieza__foto" data-lightbox data-img="img/aguila-real.jpg" data-titulo="Águila Real" data-desc="Águila de cuerpo completo posada sobre una rama, con plumaje pintado a mano pluma por pluma en blanco y tonos bronce.">
+          <img src="aguila2.jpeg" alt="Figura de águila posada sobre una rama, con cabeza blanca y plumaje en tonos bronce">
+        </div>
+        <div class="pieza__cuerpo">
+          <h3>Águila Real</h3>
+          <p class="pieza__desc">Cabeza blanca y plumaje en tonos bronce, pintado a mano pluma por pluma sobre una rama.</p>
+          <dl class="pieza__specs">
+            <div><dt>Material</dt><dd>Yeso</dd></div>
+            <div><dt>Acabado</dt><dd>Pintado a mano</dd></div>
+            <div><dt>Uso</dt><dd>Interior / exterior</dd></div>
+            <div><dt>Precio</dt><dd>A consultar</dd></div>
+          </dl>
+        </div>
+      </article>
+      <article class="pieza reveal">
+        <div class="pieza__foto" data-lightbox data-img="img/leon-bronce.jpg" data-titulo="León en Bronce" data-desc="León sentado con una pata apoyada sobre una esfera, melena tallada a mano y acabado bronce brillante.">
+          <img src="leon1.jpeg" alt="Figura de león sentado con una pata sobre una esfera, en acabado bronce">
+        </div>
+        <div class="pieza__cuerpo">
+          <h3>León en Bronce</h3>
+          <p class="pieza__desc">Melena tallada con gran detalle, en acabado bronce brillante, con la pata apoyada sobre una esfera.</p>
+          <dl class="pieza__specs">
+            <div><dt>Material</dt><dd>Cemento</dd></div>
+            <div><dt>Acabado</dt><dd>Bronce</dd></div>
+            <div><dt>Uso</dt><dd>Exterior / entrada</dd></div>
+            <div><dt>Precio</dt><dd>A consultar</dd></div>
+          </dl>
+        </div>
+      </article>
+    </div>
+    <p class="catalogo__nota">¿Buscas una figura que no está aquí? Escríbenos en el formulario de más abajo y te contamos qué tenemos disponible.</p>
+  </div>
+</section>
+
+<section class="personaliza" id="personaliza">
+  <div class="section__inner">
+    <div class="personaliza__grid">
+      <div class="personaliza__texto reveal">
+        <p class="section__eyebrow">Hazlo tú mismo</p>
+        <h2 class="section__title">Personaliza tu pieza</h2>
+        <p>Llévate tu figura en blanco natural y píntala en casa. Tenemos todo lo necesario para que el resultado quede como los de la sala de ventas.</p>
+        <div class="kit-grid">
+          <div class="kit-item"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 20l3-1 9-9-2-2-9 9-1 3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M14 9l2-2" stroke="currentColor" stroke-width="1.5"/></svg><span>Pinturas acrílicas</span></div>
+          <div class="kit-item"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.5"/><path d="M12 7v10M7 12h10" stroke="currentColor" stroke-width="1.3"/></svg><span>Pinturas metálicas</span></div>
+          <div class="kit-item"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 4h12v6a6 6 0 0 1-12 0V4Z" stroke="currentColor" stroke-width="1.5"/><path d="M9 20h6M12 16v4" stroke="currentColor" stroke-width="1.5"/></svg><span>Selladores</span></div>
+          <div class="kit-item"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12V8a3 3 0 0 1 6 0M5 12h10a3 3 0 0 1 3 3v2a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3v-5Z" stroke="currentColor" stroke-width="1.5"/></svg><span>Guantes quirúrgicos</span></div>
+          <div class="kit-item"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 4 9 15l-2 5 5-2L23 7l-3-3Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg><span>Pinceles</span></div>
+          <div class="kit-item"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.5"/><path d="M9 9c1-1 5-1 6 0M9 15c1 1 5 1 6 0" stroke="currentColor" stroke-width="1.2"/></svg><span>Esponjas</span></div>
+        </div>
+        <p style="margin-top:1.4rem;">También encontrarás pulseras, collares, inciensos, velas y artículos de vestir para completar el rincón que estás armando.</p>
+      </div>
+      <div class="personaliza__foto reveal">
+        <img src="WhatsApp Image 2026-08-04 at 08.09.21.jpeg" alt="Estante del taller con figuras de yeso blanco listas para pintar">
+        <div class="personaliza__foto-tag">Así salen del taller: en blanco, listas para tu pincel.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="visitanos" id="visitanos">
+  <div class="section__inner">
+    <div class="visitanos__grid">
+      <div class="reveal">
+        <p class="section__eyebrow">Ubicación</p>
+        <h2 class="section__title">Visítanos</h2>
+        <div class="visitanos__foto">
+          <img src="WhatsApp Image 2026-08-04 at 08.09.24.jpeg" alt="Entrada del taller custodiada por dos cabezas de león en yeso">
+        </div>
+        <div class="visitanos__dato">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 22s7-7.4 7-12.5A7 7 0 0 0 5 9.5C5 14.6 12 22 12 22Z" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="9.5" r="2.6" stroke="currentColor" stroke-width="1.6"/></svg>
+          <div><strong>Dentro del Centro Comercial</strong>Busca el letrero de "Cerámica La Bendición" con la flecha roja: te guía directo al local de esculturas de yeso.</div>
+        </div>
+        <div class="visitanos__dato">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="15" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M3 9h18M8 3v4M16 3v4" stroke="currentColor" stroke-width="1.5"/></svg>
+          <div><strong>Compra directa o por encargo</strong>Llévate una pieza tal como está en la sala de ventas, o encárgala como la necesitas.</div>
+        </div>
+      </div>
+      <div class="reveal">
+        <p class="section__eyebrow">Encargos</p>
+        <h2 class="section__title">Cuéntanos qué buscas</h2>
+        <p class="contacto__intro">Escríbenos qué figura tienes en mente, para qué la necesitas o si quieres coordinar tu visita al taller, y te respondemos con la disponibilidad.</p>
+        <form class="form" id="form-contacto">
+          <div class="form__row">
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" name="nombre" required>
+          </div>
+          <div class="form__row">
+            <label for="contacto">Correo o teléfono</label>
+            <input type="text" id="contacto" name="contacto" required>
+          </div>
+          <div class="form__row">
+            <label for="interes">¿Qué te interesa?</label>
+            <select id="interes" name="interes">
+              <option>Comprar una figura del catálogo</option>
+              <option>Encargar una pieza</option>
+              <option>Set para pintar en casa</option>
+              <option>Otra consulta</option>
+            </select>
+          </div>
+          <div class="form__row">
+            <label for="mensaje">¿Qué figura tienes en mente?</label>
+            <textarea id="mensaje" name="mensaje" rows="4" required></textarea>
+          </div>
+          <button type="submit" class="form__submit">Enviar mensaje</button>
+        </form>
+        <p class="form__gracias" id="form-gracias" hidden>Listo. Ya tenemos tu mensaje en el taller — te escribimos pronto.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer__inner">
+    <span class="footer__brand">Cerámica La Bendición</span>
+    <p class="footer__linea">Figuras de yeso y cemento blanco, hechas y pintadas a mano.</p>
+    <div class="footer__links">
+      <a href="#categorias">Categorías</a>
+      <a href="#oficio">El oficio</a>
+      <a href="#catalogo">Catálogo</a>
+      <a href="#personaliza">Personaliza</a>
+      <a href="#visitanos">Visítanos</a>
+    </div>
+  </div>
+</footer>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox__cerrar" id="lightboxCerrar" aria-label="Cerrar">&times;</button>
+  <div class="lightbox__caja">
+    <img id="lightboxImg" src="" alt="">
+    <div class="lightbox__info">
+      <span id="lightboxCat"></span>
+      <h3 id="lightboxTitulo"></h3>
+      <p id="lightboxDesc"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Reveal on scroll */
+  var revealEls = document.querySelectorAll('.reveal');
+  if (reduceMotion || !('IntersectionObserver' in window)) {
+    revealEls.forEach(function (el) { el.classList.add('is-visible'); });
+  } else {
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    revealEls.forEach(function (el) { obs.observe(el); });
+  }
+
+  /* Scroll spy en el nav */
+  var navLinks = document.querySelectorAll('[data-nav]');
+  var secciones = ['categorias', 'oficio', 'catalogo', 'personaliza', 'visitanos']
+    .map(function (id) { return document.getElementById(id); })
+    .filter(Boolean);
+  if ('IntersectionObserver' in window && secciones.length) {
+    var spy = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          navLinks.forEach(function (a) {
+            a.classList.toggle('is-active', a.getAttribute('href') === '#' + entry.target.id);
+          });
+        }
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    secciones.forEach(function (s) { spy.observe(s); });
+  }
+
+  /* Comparador antes / despues */
+  var rango = document.getElementById('transformaRange');
+  var despues = document.getElementById('transformaDespues');
+  var linea = document.getElementById('transformaLinea');
+  var manija = document.getElementById('transformaManija');
+  function actualizarComparador(valor) {
+    despues.style.clipPath = 'inset(0 ' + (100 - valor) + '% 0 0)';
+    linea.style.left = valor + '%';
+    manija.style.left = valor + '%';
+  }
+  if (rango) {
+    actualizarComparador(rango.value);
+    rango.addEventListener('input', function () { actualizarComparador(this.value); });
+  }
+
+  /* Lightbox de imagenes */
+  var lightbox = document.getElementById('lightbox');
+  var lbImg = document.getElementById('lightboxImg');
+  var lbTitulo = document.getElementById('lightboxTitulo');
+  var lbDesc = document.getElementById('lightboxDesc');
+  var lbCat = document.getElementById('lightboxCat');
+  var disparadores = document.querySelectorAll('[data-lightbox]');
+
+  disparadores.forEach(function (el) {
+    el.addEventListener('click', function () {
+      lbImg.src = el.getAttribute('data-img');
+      lbImg.alt = el.getAttribute('data-titulo') || '';
+      lbTitulo.textContent = el.getAttribute('data-titulo') || '';
+      lbDesc.textContent = el.getAttribute('data-desc') || '';
+      lbCat.textContent = 'Cerámica La Bendición';
+      lightbox.classList.add('is-open');
+    });
+  });
+
+  function cerrarLightbox() { lightbox.classList.remove('is-open'); }
+  document.getElementById('lightboxCerrar').addEventListener('click', cerrarLightbox);
+  lightbox.addEventListener('click', function (e) { if (e.target === lightbox) cerrarLightbox(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') cerrarLightbox(); });
+
+  /* Formulario */
+  var form = document.getElementById('form-contacto');
+  var gracias = document.getElementById('form-gracias');
+  if (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      form.hidden = true;
+      gracias.hidden = false;
+    });
+  }
+})();
+</script>
+
+</body>
+</html>
