@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bazar Tía Domi – Variedades, flores eternas y regalos | Bueno, bonito y barato</title>
+    <meta name="description" content="Bazar Tía Domi: variedades, flores eternas, termos y regalos para cumpleaños, aniversarios y fechas especiales. Detalles bonitos a precios accesibles. Consulta por WhatsApp.">
+    <meta property="og:title" content="Bazar Tía Domi – Bueno, bonito y barato">
+    <meta property="og:description" content="Variedades, flores eternas y regalos para sorprender en cualquier ocasión.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="fotostiadomi/WhatsApp%20Image%202026-10-12%20at%2010.51.57%20(2).jpeg">
+    <meta name="theme-color" content="#fbe4ea">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌹</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="preload" as="image" href="fotostiadomi/WhatsApp%20Image%202026-10-12%20at%2010.51.57%20(2).jpeg">
+
+    <!-- =====================================================================
+         CONFIGURACIÓN DEL NEGOCIO
+         Todo lo que el negocio puede necesitar cambiar está aquí:
+         contacto, precios de referencia, categorías y fotografías.
+         ===================================================================== -->
+    <script>
+        const NEGOCIO = {
+            nombre: 'Bazar Tía Domi',
+            eslogan: 'Bueno, bonito y barato',
+
+            // Número de WhatsApp con código de país, solo dígitos. Ej: '56912345678'
+            whatsapp: '',
+
+            // Datos opcionales: se muestran solo si se completan.
+            direccion: '',
+            horario: '',
+            instagram: '',   // enlace completo, ej: 'https://instagram.com/usuario'
+            facebook: '',    // enlace completo
+
+            mensajes: {
+                general: '¡Hola! Vi los productos de Bazar Tía Domi y quisiera consultar por los regalos y variedades disponibles.',
+                precios: '¡Hola! Vi la página de Bazar Tía Domi y quisiera consultar por los productos disponibles y sus precios.',
+                encargo: '¡Hola! Estoy buscando un regalo especial y quisiera consultar por las opciones por encargo de Bazar Tía Domi.'
+            }
+        };
+
+        // Carpeta donde están las fotografías
+        const CARPETA_FOTOS = 'fotostiadomi/';
+
+        // Precios de referencia informados por el negocio
+        const PRECIOS = [
+            { etiqueta: 'Detalles desde', valor: '$7.000' },
+            { etiqueta: 'Opciones desde', valor: '$10.000' }
+        ];
+
+        // Categorías de productos. Para cambiar una foto, reemplaza "foto" por el
+        // nombre del archivo dentro de la carpeta. "encuadre" ajusta qué parte se ve.
+        const CATEGORIAS = [
+            {
+                nombre: 'Flores eternas y arreglos',
+                descripcion: 'Arreglos decorativos y detalles duraderos para cumpleaños, aniversarios y fechas especiales.',
+                foto: 'WhatsApp Image 2026-10-12 at 10.51.57 (2).jpeg',
+                alt: 'Caja de regalo con flores eternas rojas, doradas y crema junto a un peluche',
+                encuadre: 'center 65%'
+            },
+            {
+                nombre: 'Variedades y regalos',
+                descripcion: 'Artículos para regalar o para el día a día, con opciones para distintas edades, gustos y presupuestos.',
+                foto: 'WhatsApp Image 2026-10-12 at 10.51.59 (2).jpeg',
+                alt: 'Tazones de regalo en sus cajas junto a flores eternas',
+                encuadre: 'center 60%'
+            },
+            {
+                nombre: 'Termos y artículos útiles',
+                descripcion: 'Termos para regalar o usar todos los días: un detalle bonito que además se aprovecha.',
+                foto: 'WhatsApp Image 2026-10-12 at 10.51.58 (4).jpeg',
+                alt: 'Termo forrado en rojo con búhos bordados junto a un set de mate decorado',
+                encuadre: 'center 68%'
+            },
+            {
+                nombre: 'Manteles y cortinas',
+                descripcion: 'Artículos para decorar y darle un toque especial a tu hogar.',
+                foto: 'WhatsApp Image 2026-10-12 at 10.51.58 (1).jpeg',
+                alt: 'Cortinas y visillos en la repisa del bazar',
+                encuadre: 'center 100%'
+            },
+            {
+                nombre: 'Papel de regalo y envoltorios',
+                descripcion: 'Bolsas y envoltorios para presentar tu regalo y preparar un detalle especial.',
+                foto: 'WhatsApp Image 2026-10-12 at 10.51.57 (1).jpeg',
+                alt: 'Bolsas de regalo con diseños de rosas y brillos colgadas en el puesto',
+                encuadre: '35% center'
+            },
+            {
+                nombre: 'Regalos para ocasiones especiales',
+                descripcion: 'Alternativas para cumpleaños, aniversarios, celebraciones y otras fechas importantes.',
+                foto: 'WhatsApp Image 2026-10-12 at 10.51.59.jpeg',
+                alt: 'Caja de regalo con flores eternas rojas y azules y un set de vasos',
+                encuadre: 'center 70%'
+            }
+        ];
+    </script>
+
+    <style>
+        :root {
+            --crema: #fff8f1;
+            --crema-2: #fdeee0;
+            --rosa: #fbe4ea;
+            --rosa-2: #f6c9d6;
+            --lila: #ece4f7;
+            --lila-2: #8a6bb8;
+            --coral: #ef7f6d;
+            --frambuesa: #b23a5c;
+            --frambuesa-osc: #8f2a48;
+            --tinta: #3b2a33;
+            --tinta-suave: #6a5560;
+            --verde-wa: #0e7a41;
+            --verde-wa-osc: #0a6133;
+            --blanco: #ffffff;
+            --radio: 22px;
+            --sombra: 0 10px 30px -12px rgba(143, 42, 72, .28);
+            --sombra-alta: 0 22px 44px -16px rgba(143, 42, 72, .38);
+            --ancho: 1140px;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+
+        body {
+            font-family: 'Nunito', system-ui, sans-serif;
+            font-size: 1.0625rem;
+            line-height: 1.65;
+            color: var(--tinta);
+            background: var(--crema);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        img { display: block; max-width: 100%; height: auto; }
+        a { color: inherit; }
+
+        h1, h2, h3 {
+            font-family: 'Fraunces', Georgia, serif;
+            font-weight: 600;
+            line-height: 1.12;
+            letter-spacing: -.015em;
+            color: var(--tinta);
+            text-wrap: balance;
+        }
+        h1 { font-size: clamp(2.25rem, 6vw, 4rem); }
+        h2 { font-size: clamp(1.75rem, 4vw, 2.75rem); }
+        h3 { font-size: 1.3rem; }
+        p { color: var(--tinta-suave); text-wrap: pretty; }
+
+        :focus-visible {
+            outline: 3px solid var(--lila-2);
+            outline-offset: 3px;
+            border-radius: 8px;
+        }
+
+        .saltar {
+            position: absolute; left: 16px; top: -60px;
+            background: var(--tinta); color: var(--blanco);
+            padding: 10px 16px; border-radius: 10px; z-index: 200;
+            transition: top .2s;
+        }
+        .saltar:focus { top: 12px; }
+
+        .contenedor { width: min(100% - 32px, var(--ancho)); margin-inline: auto; }
+        section { padding: clamp(56px, 9vw, 104px) 0; }
+
+        .sobretitulo {
+            font-family: 'Caveat', cursive;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--frambuesa);
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+
+        .cabecera-seccion { max-width: 640px; margin-bottom: clamp(28px, 5vw, 48px); }
+        .cabecera-seccion p { margin-top: 14px; }
+
+        /* ---------- Botones ---------- */
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+            min-height: 50px; padding: 12px 26px;
+            font: inherit; font-weight: 800; text-decoration: none;
+            border: 2px solid transparent; border-radius: 999px; cursor: pointer;
+            transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease;
+        }
+        .btn:hover { transform: translateY(-2px); }
+        .btn:active { transform: translateY(0); }
+        .btn svg { width: 22px; height: 22px; flex: none; fill: currentColor; }
+
+        .btn-principal { background: var(--frambuesa); color: var(--blanco); box-shadow: var(--sombra); }
+        .btn-principal:hover { background: var(--frambuesa-osc); box-shadow: var(--sombra-alta); }
+
+        .btn-wa { background: var(--verde-wa); color: var(--blanco); box-shadow: 0 10px 26px -12px rgba(14, 122, 65, .6); }
+        .btn-wa:hover { background: var(--verde-wa-osc); }
+
+        .btn-borde { background: var(--blanco); color: var(--frambuesa-osc); border-color: var(--rosa-2); }
+        .btn-borde:hover { border-color: var(--frambuesa); }
+
+        .btn-grande { min-height: 60px; padding: 16px 34px; font-size: 1.125rem; }
+
+        /* ---------- Encabezado ---------- */
+        .encabezado {
+            position: sticky; top: 0; z-index: 100;
+            background: rgba(255, 248, 241, .92);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(178, 58, 92, .12);
+        }
+        .barra { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 68px; }
+
+        .marca { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
+        .marca-sello {
+            display: grid; place-items: center; width: 42px; height: 42px; flex: none;
+            background: var(--rosa); border: 2px dashed var(--frambuesa); border-radius: 50%;
+            font-size: 1.25rem; transform: rotate(-8deg);
+        }
+        .marca-nombre { font-family: 'Fraunces', serif; font-weight: 700; font-size: 1.3rem; color: var(--tinta); line-height: 1; }
+        .marca-nombre small { display: block; font-family: 'Caveat', cursive; font-size: 1.05rem; font-weight: 700; color: var(--frambuesa); margin-top: 2px; }
+
+        .nav-lista { display: flex; align-items: center; gap: 4px; list-style: none; }
+        .nav-lista a:not(.btn) {
+            display: block; padding: 10px 12px; border-radius: 999px;
+            text-decoration: none; font-weight: 700; font-size: .98rem; color: var(--tinta);
+            transition: background-color .2s, color .2s;
+        }
+        .nav-lista a:not(.btn):hover { background: var(--rosa); color: var(--frambuesa-osc); }
+        .nav-lista .btn { min-height: 44px; padding: 8px 20px; margin-left: 8px; }
+
+        .menu-btn {
+            display: none; width: 46px; height: 46px; border-radius: 14px;
+            background: var(--rosa); border: 0; cursor: pointer; color: var(--frambuesa-osc);
+        }
+        .menu-btn svg { width: 24px; height: 24px; margin: auto; stroke: currentColor; fill: none; stroke-width: 2.4; stroke-linecap: round; }
+
+        @media (max-width: 920px) {
+            .menu-btn { display: grid; place-items: center; }
+            .nav {
+                position: absolute; left: 0; right: 0; top: 100%;
+                background: var(--crema); border-bottom: 1px solid rgba(178, 58, 92, .15);
+                box-shadow: var(--sombra);
+                display: none; padding: 12px 16px 20px;
+            }
+            .nav.abierto { display: block; }
+            .nav-lista { flex-direction: column; align-items: stretch; gap: 2px; }
+            .nav-lista a:not(.btn) { padding: 14px 16px; font-size: 1.05rem; }
+            .nav-lista .btn { margin: 10px 0 0; min-height: 52px; }
+        }
+
+        /* ---------- Hero ---------- */
+        .hero {
+            position: relative;
+            padding-top: clamp(36px, 6vw, 72px);
+            background:
+                radial-gradient(60% 55% at 88% 12%, var(--lila) 0%, transparent 70%),
+                radial-gradient(55% 60% at 5% 95%, var(--crema-2) 0%, transparent 70%),
+                linear-gradient(180deg, var(--rosa) 0%, var(--crema) 100%);
+        }
+        .hero-grid { display: grid; grid-template-columns: 1.02fr .98fr; gap: clamp(28px, 5vw, 64px); align-items: center; }
+        .hero p.bajada { font-size: 1.15rem; margin: 20px 0 28px; max-width: 34em; }
+        .hero h1 em { font-style: normal; color: var(--frambuesa); }
+        .acciones { display: flex; flex-wrap: wrap; gap: 12px; }
+
+        .hero-fotos { position: relative; padding: 0 0 46px 34px; }
+        .foto-principal {
+            border-radius: 28px; overflow: hidden; box-shadow: var(--sombra-alta);
+            border: 6px solid var(--blanco); aspect-ratio: 5 / 4; background: var(--rosa-2);
+        }
+        .foto-principal img { width: 100%; height: 100%; object-fit: cover; object-position: center 62%; }
+        .foto-mini {
+            position: absolute; width: 34%; aspect-ratio: 3 / 4;
+            border: 5px solid var(--blanco); border-radius: 18px; overflow: hidden;
+            box-shadow: var(--sombra); background: var(--rosa-2);
+        }
+        .foto-mini img { width: 100%; height: 100%; object-fit: cover; }
+        .foto-mini.uno { left: 0; bottom: 0; transform: rotate(-6deg); }
+        .foto-mini.uno img { object-position: center 70%; }
+        .foto-mini.dos { right: -6px; top: -26px; width: 28%; transform: rotate(7deg); }
+        .foto-mini.dos img { object-position: 30% 62%; }
+
+        /* Etiqueta de precio escrita a mano, como las del puesto */
+        .sello {
+            position: absolute; right: 4%; bottom: 6px; z-index: 2;
+            background: var(--blanco); color: var(--frambuesa-osc);
+            font-family: 'Caveat', cursive; font-weight: 700; font-size: clamp(1.45rem, 3.2vw, 1.9rem); line-height: 1;
+            padding: 14px 22px 14px 34px; border-radius: 10px 30px 30px 10px;
+            box-shadow: var(--sombra); transform: rotate(-4deg);
+            border: 2px solid var(--rosa-2);
+        }
+        .sello::before {
+            content: ''; position: absolute; left: 12px; top: 50%; width: 11px; height: 11px;
+            margin-top: -6px; border-radius: 50%; background: var(--rosa); border: 2px solid var(--frambuesa);
+        }
+
+        @media (max-width: 860px) {
+            .hero-grid { grid-template-columns: 1fr; }
+            .hero-fotos { padding-left: 22px; max-width: 520px; margin-inline: auto; width: 100%; }
+            .foto-mini.dos { top: -18px; right: -4px; }
+        }
+        @media (max-width: 480px) {
+            .acciones .btn { width: 100%; }
+        }
+
+        /* ---------- Categorías ---------- */
+        .rejilla { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; list-style: none; }
+        @media (max-width: 960px) { .rejilla { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 600px) { .rejilla { grid-template-columns: 1fr; gap: 18px; } }
+
+        .tarjeta {
+            display: flex; flex-direction: column; height: 100%;
+            background: var(--blanco); border-radius: var(--radio); overflow: hidden;
+            box-shadow: var(--sombra); border: 1px solid rgba(178, 58, 92, .08);
+            transition: transform .3s ease, box-shadow .3s ease;
+        }
+        .tarjeta:hover, .tarjeta:focus-within { transform: translateY(-6px); box-shadow: var(--sombra-alta); }
+        .tarjeta-foto { aspect-ratio: 4 / 3; overflow: hidden; background: var(--rosa); }
+        .tarjeta-foto img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s ease; }
+        .tarjeta:hover .tarjeta-foto img { transform: scale(1.06); }
+        .tarjeta-cuerpo { display: flex; flex-direction: column; gap: 10px; padding: 22px 22px 24px; flex: 1; }
+        .tarjeta-cuerpo p { font-size: 1rem; flex: 1; }
+        .enlace-wa {
+            align-self: flex-start; display: inline-flex; align-items: center; gap: 6px;
+            margin-top: 6px; padding: 6px 0; font-weight: 800; color: var(--frambuesa-osc);
+            text-decoration: underline; text-decoration-color: var(--rosa-2);
+            text-decoration-thickness: 2px; text-underline-offset: 5px;
+        }
+        .enlace-wa:hover { text-decoration-color: var(--frambuesa); }
+        .enlace-wa span { transition: transform .2s; }
+        .enlace-wa:hover span { transform: translateX(4px); }
+
+        /* ---------- Precios ---------- */
+        .precios { background: var(--lila); }
+        .precios-caja { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 5vw, 60px); align-items: center; }
+        .precios-caja p.nota { margin: 16px 0 26px; }
+        .etiquetas { display: flex; flex-wrap: wrap; gap: 26px 22px; justify-content: center; list-style: none; }
+        .etiqueta {
+            position: relative; background: var(--blanco);
+            padding: 26px 30px 22px 46px; border-radius: 14px 44px 44px 14px;
+            box-shadow: var(--sombra); min-width: 210px;
+        }
+        .etiqueta:nth-child(odd) { transform: rotate(-4deg); }
+        .etiqueta:nth-child(even) { transform: rotate(3deg); margin-top: 22px; }
+        .etiqueta::before {
+            content: ''; position: absolute; left: 16px; top: 50%; width: 14px; height: 14px;
+            margin-top: -8px; border-radius: 50%; background: var(--lila); border: 2px solid var(--lila-2);
+        }
+        .etiqueta small { display: block; font-weight: 800; font-size: .9rem; letter-spacing: .06em; text-transform: uppercase; color: var(--tinta-suave); }
+        .etiqueta strong { display: block; font-family: 'Caveat', cursive; font-size: 3.6rem; line-height: .95; color: var(--frambuesa); }
+        @media (max-width: 820px) {
+            .precios-caja { grid-template-columns: 1fr; }
+            .etiquetas { order: -1; }
+        }
+
+        /* ---------- Regalos por encargo ---------- */
+        .encargo-caja {
+            display: grid; grid-template-columns: .85fr 1.15fr; align-items: stretch;
+            background: linear-gradient(135deg, var(--frambuesa) 0%, #c9506c 60%, var(--coral) 130%);
+            border-radius: 34px; overflow: hidden; box-shadow: var(--sombra-alta);
+        }
+        .encargo-foto { min-height: 320px; background: var(--frambuesa-osc); }
+        .encargo-foto img { width: 100%; height: 100%; object-fit: cover; object-position: center 58%; }
+        .encargo-texto { padding: clamp(30px, 5vw, 60px); align-self: center; }
+        .encargo-texto .sobretitulo { color: #ffe3d6; }
+        .encargo-texto h2 { color: var(--blanco); }
+        .encargo-texto p { color: #fff1f4; margin: 18px 0 30px; font-size: 1.1rem; }
+        .encargo-texto .btn-wa { background: var(--blanco); color: var(--verde-wa-osc); box-shadow: 0 14px 30px -14px rgba(0, 0, 0, .5); }
+        .encargo-texto .btn-wa:hover { background: #f1fff6; }
+        @media (max-width: 820px) {
+            .encargo-caja { grid-template-columns: 1fr; border-radius: 26px; }
+            .encargo-foto { min-height: 0; aspect-ratio: 4 / 3; }
+            .encargo-texto .btn { width: 100%; }
+        }
+
+        /* ---------- Historia ---------- */
+        .historia-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: clamp(28px, 5vw, 64px); align-items: center; }
+        .historia-foto { position: relative; }
+        .historia-foto img {
+            width: 100%; aspect-ratio: 16 / 10; object-fit: cover;
+            border-radius: 26px; border: 6px solid var(--blanco); box-shadow: var(--sombra-alta);
+            transform: rotate(-1.5deg);
+        }
+        .anios {
+            position: absolute; right: -8px; bottom: -22px;
+            display: grid; place-items: center; text-align: center;
+            width: 112px; height: 112px; border-radius: 50%;
+            background: var(--coral); color: var(--tinta);
+            font-weight: 800; font-size: .82rem; line-height: 1.15;
+            border: 3px dashed var(--blanco); box-shadow: var(--sombra); transform: rotate(8deg);
+        }
+        .anios b { display: block; font-family: 'Fraunces', serif; font-size: 2.3rem; line-height: .9; }
+        .historia-grid p { margin-top: 18px; font-size: 1.1rem; }
+        @media (max-width: 860px) { .historia-grid { grid-template-columns: 1fr; } }
+
+        /* ---------- Día especial ---------- */
+        .urgente { background: var(--crema-2); text-align: center; }
+        .urgente .contenedor { max-width: 760px; }
+        .urgente p { margin: 18px auto 30px; font-size: 1.12rem; max-width: 36em; }
+
+        /* ---------- Contacto ---------- */
+        .contacto-caja {
+            display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px, 4vw, 56px); align-items: center;
+            background: var(--blanco); border-radius: 30px; padding: clamp(26px, 5vw, 56px);
+            box-shadow: var(--sombra); border: 1px solid rgba(178, 58, 92, .1);
+        }
+        .contacto-caja > div > p { margin: 14px 0 26px; }
+        .datos { list-style: none; display: grid; gap: 12px; }
+        .datos li {
+            display: flex; gap: 14px; align-items: flex-start;
+            background: var(--crema); border-radius: 16px; padding: 16px 18px;
+        }
+        .datos .icono { font-size: 1.35rem; line-height: 1.4; flex: none; }
+        .datos small { display: block; font-weight: 800; font-size: .8rem; letter-spacing: .07em; text-transform: uppercase; color: var(--frambuesa-osc); }
+        .datos a { font-weight: 700; word-break: break-word; }
+        @media (max-width: 820px) {
+            .contacto-caja { grid-template-columns: 1fr; }
+            .contacto-caja .btn { width: 100%; }
+        }
+
+        /* ---------- Pie ---------- */
+        .pie { background: var(--tinta); color: #f6e9ee; padding: 48px 0 104px; }
+        .pie-grid { display: flex; flex-wrap: wrap; gap: 28px 48px; justify-content: space-between; align-items: flex-start; }
+        .pie .marca-nombre { color: var(--blanco); font-size: 1.5rem; }
+        .pie .marca-nombre small { color: #ffc2b5; font-size: 1.25rem; }
+        .pie ul { list-style: none; display: flex; flex-wrap: wrap; gap: 4px 20px; }
+        .pie a { display: inline-block; padding: 8px 0; color: #f6e9ee; text-decoration: none; font-weight: 700; }
+        .pie a:hover { text-decoration: underline; text-underline-offset: 5px; }
+        .pie .pie-wa { color: #8ff0b8; }
+
+        /* ---------- WhatsApp flotante ---------- */
+        .flotante {
+            position: fixed; right: 18px; bottom: 18px; z-index: 90;
+            display: inline-flex; align-items: center; gap: 10px;
+            height: 60px; padding: 0 22px 0 18px; border-radius: 999px;
+            background: var(--verde-wa); color: var(--blanco); font-weight: 800; text-decoration: none;
+            box-shadow: 0 14px 30px -10px rgba(14, 122, 65, .7);
+            transition: transform .2s, background-color .2s;
+        }
+        .flotante:hover { transform: translateY(-3px) scale(1.03); background: var(--verde-wa-osc); }
+        .flotante svg { width: 28px; height: 28px; fill: currentColor; }
+        @media (max-width: 600px) {
+            .flotante { width: 60px; padding: 0; justify-content: center; }
+            .flotante span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+        }
+
+        /* ---------- Animaciones ---------- */
+        .aparece { opacity: 0; transform: translateY(22px); transition: opacity .7s ease, transform .7s ease; }
+        .aparece.visible { opacity: 1; transform: none; }
+        .sin-js .aparece { opacity: 1; transform: none; }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            *, *::before, *::after { transition: none !important; animation: none !important; }
+            .aparece { opacity: 1; transform: none; }
+        }
+    </style>
+</head>
+<body class="sin-js">
+    <a class="saltar" href="#contenido">Saltar al contenido</a>
+
+    <!-- Ícono de WhatsApp reutilizable -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+        <symbol id="ico-wa" viewBox="0 0 24 24">
+            <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 1.67c2.2 0 4.26.86 5.82 2.42a8.2 8.2 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24ZM8.53 7.33c-.16 0-.43.06-.66.31-.22.25-.87.85-.87 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.07-.1-.23-.16-.48-.29-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.81-.78.97-.15.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.16.04-.31-.02-.43-.06-.13-.56-1.35-.77-1.84-.2-.48-.4-.42-.56-.43h-.46Z"/>
+        </symbol>
+    </svg>
+
+    <header class="encabezado">
+        <div class="contenedor barra">
+            <a class="marca" href="#inicio" aria-label="Bazar Tía Domi, ir al inicio">
+                <span class="marca-sello" aria-hidden="true">🌹</span>
+                <span class="marca-nombre">Bazar Tía Domi</span>
+            </a>
+            <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu" aria-label="Abrir menú">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+            </button>
+            <nav class="nav" id="menu" aria-label="Principal">
+                <ul class="nav-lista">
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#productos">Productos</a></li>
+                    <li><a href="#encargo">Regalos por encargo</a></li>
+                    <li><a href="#nosotros">Sobre nosotros</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                    <li>
+                        <a class="btn btn-wa" data-wa="general" href="https://wa.me/" target="_blank" rel="noopener">
+                            <svg aria-hidden="true"><use href="#ico-wa"/></svg>¡Hablemos!
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main id="contenido">
+        <!-- Hero -->
+        <section class="hero" id="inicio">
+            <div class="contenedor hero-grid">
+                <div>
+                    <p class="sobretitulo">Variedades y regalos con cariño</p>
+                    <h1>¡Encuentra ese <em>detalle especial</em> en Bazar Tía Domi!</h1>
+                    <p class="bajada">Variedades, flores eternas y regalos para sorprender en cualquier ocasión. Productos bonitos, precios accesibles y detalles preparados con cariño.</p>
+                    <div class="acciones">
+                        <a class="btn btn-principal" href="#productos">Ver productos</a>
+                        <a class="btn btn-wa" data-wa="general" href="https://wa.me/" target="_blank" rel="noopener">
+                            <svg aria-hidden="true"><use href="#ico-wa"/></svg>Cotizar por WhatsApp
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-fotos">
+                    <div class="foto-principal">
+                        <img src="fotostiadomi/WhatsApp%20Image%202026-10-12%20at%2010.51.57%20(2).jpeg" width="1600" height="900" fetchpriority="high" alt="Caja de regalo con flores eternas rojas, doradas y crema, un peluche y una mariposa dorada">
+                    </div>
+                    <div class="foto-mini uno">
+                        <img src="fotostiadomi/WhatsApp%20Image%202026-10-12%20at%2010.51.58%20(4).jpeg" width="900" height="1600" decoding="async" alt="Termo rojo con búhos bordados y set de mate decorado">
+                    </div>
+                    <div class="foto-mini dos">
+                        <img src="fotostiadomi/WhatsApp%20Image%202026-10-12%20at%2010.51.59%20(3).jpeg" width="900" height="1600" decoding="async" alt="Caja de regalo con flores eternas y un tazón">
+                    </div>
+                    <p class="sello">Bueno, bonito y barato</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Categorías -->
+        <section id="productos" aria-labelledby="t-productos">
+            <div class="contenedor">
+                <div class="cabecera-seccion aparece">
+                    <p class="sobretitulo">Lo que encuentras en el bazar</p>
+                    <h2 id="t-productos">Nuestros productos</h2>
+                    <p>Un poco de todo para regalar, decorar y usar en el día a día. Pregúntanos por lo que hay disponible.</p>
+                </div>
+                <ul class="rejilla" id="categorias"></ul>
+                <noscript><p>Flores eternas y arreglos · Variedades y regalos · Termos y artículos útiles · Manteles y cortinas · Papel de regalo y envoltorios · Regalos para ocasiones especiales.</p></noscript>
+            </div>
+        </section>
+
+        <!-- Precios -->
+        <section class="precios" aria-labelledby="t-precios">
+            <div class="contenedor precios-caja">
+                <div class="aparece">
+                    <p class="sobretitulo">Precios accesibles</p>
+                    <h2 id="t-precios">¡Siempre hay una opción especial para tu presupuesto!</h2>
+                    <p class="nota">Valores de referencia para productos seleccionados. Escríbenos y te contamos qué hay disponible y cuánto cuesta.</p>
+                    <a class="btn btn-wa" data-wa="precios" href="https://wa.me/" target="_blank" rel="noopener">
+                        <svg aria-hidden="true"><use href="#ico-wa"/></svg>Consultar productos y precios
+                    </a>
+                </div>
+                <ul class="etiquetas aparece" id="precios"></ul>
+            </div>
+        </section>
+
+        <!-- Regalos por encargo -->
+        <section id="encargo" aria-labelledby="t-encargo">
+            <div class="contenedor">
+                <div class="encargo-caja aparece">
+                    <div class="encargo-foto">
+                        <img src="fotostiadomi/WhatsApp%20Image%202026-10-12%20at%2010.51.59%20(3).jpeg" width="900" height="1600" loading="lazy" decoding="async" alt="Caja de regalo con flores eternas, un corazón de peluche y un tazón, preparada en el bazar">
+                    </div>
+                    <div class="encargo-texto">
+                        <p class="sobretitulo">Regalos por encargo</p>
+                        <h2 id="t-encargo">¿Buscas un regalo especial? ¡Lo preparamos por encargo!</h2>
+                        <p>Cuéntanos qué tienes en mente y consulta por las opciones disponibles. En Bazar Tía Domi te ayudamos a encontrar ese detalle especial para sorprender en cumpleaños, aniversarios y otras ocasiones importantes.</p>
+                        <a class="btn btn-wa btn-grande" data-wa="encargo" href="https://wa.me/" target="_blank" rel="noopener">
+                            <svg aria-hidden="true"><use href="#ico-wa"/></svg>Consultar mi regalo por WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Historia -->
+        <section id="nosotros" aria-labelledby="t-historia">
+            <div class="contenedor historia-grid">
+                <div class="historia-foto aparece">
+                    <img src="fotostiadomi/WhatsApp%20Image%202026-10-12%20at%2010.51.59%20(4).jpeg" width="1600" height="900" loading="lazy" decoding="async" alt="El puesto de Bazar Tía Domi con sus regalos, peluches, flores eternas y variedades">
+                    <p class="anios"><span><b>3</b>años de<br>esfuerzo</span></p>
+                </div>
+                <div class="aparece">
+                    <p class="sobretitulo">Una historia de esfuerzo</p>
+                    <h2 id="t-historia">Tres años creciendo con esfuerzo y cariño</h2>
+                    <p>Bazar Tía Domi nació de la necesidad y del esfuerzo por salir adelante. Con dedicación y muchas ganas de crecer, hemos construido un emprendimiento pensado para ofrecer variedades, regalos y detalles especiales a precios accesibles.</p>
+                    <p>Queremos ayudarte a encontrar ese regalo que te salva en una fecha importante, sin tener que gastar de más.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Día especial -->
+        <section class="urgente" aria-labelledby="t-urgente">
+            <div class="contenedor aparece">
+                <p class="sobretitulo">El regalo que necesitas, cuando lo necesitas</p>
+                <h2 id="t-urgente">¡Ese día especial no te puede pillar sin regalo!</h2>
+                <p>Cumpleaños, aniversarios o simplemente las ganas de sorprender. Descubre nuestras variedades y encuentra un detalle bonito sin salirte de tu presupuesto.</p>
+                <a class="btn btn-principal btn-grande" href="#productos">Encuentra tu regalo</a>
+            </div>
+        </section>
+
+        <!-- Contacto -->
+        <section id="contacto" aria-labelledby="t-contacto">
+            <div class="contenedor">
+                <div class="contacto-caja aparece">
+                    <div>
+                        <p class="sobretitulo">Contacto</p>
+                        <h2 id="t-contacto">Escríbele a Bazar Tía Domi</h2>
+                        <p>Consulta por productos, precios y regalos directamente por WhatsApp. Te respondemos con gusto.</p>
+                        <a class="btn btn-wa btn-grande" data-wa="general" href="https://wa.me/" target="_blank" rel="noopener">
+                            <svg aria-hidden="true"><use href="#ico-wa"/></svg>Abrir WhatsApp
+                        </a>
+                    </div>
+                    <ul class="datos" id="datos-contacto"></ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="pie">
+        <div class="contenedor pie-grid">
+            <p class="marca-nombre">Bazar Tía Domi<small>Bueno, bonito y barato</small></p>
+            <nav aria-label="Pie de página">
+                <ul>
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#productos">Productos</a></li>
+                    <li><a href="#encargo">Regalos por encargo</a></li>
+                    <li><a href="#nosotros">Sobre nosotros</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                    <li><a class="pie-wa" data-wa="general" href="https://wa.me/" target="_blank" rel="noopener">WhatsApp</a></li>
+                </ul>
+            </nav>
+        </div>
+    </footer>
+
+    <a class="flotante" data-wa="general" href="https://wa.me/" target="_blank" rel="noopener" aria-label="Escribir a Bazar Tía Domi por WhatsApp">
+        <svg aria-hidden="true"><use href="#ico-wa"/></svg><span>¡Hablemos!</span>
+    </a>
+
+    <script>
+        document.body.classList.remove('sin-js');
+
+        const numero = NEGOCIO.whatsapp.replace(/\D/g, '');
+        const enlaceWa = (texto) => 'https://wa.me/' + numero + '?text=' + encodeURIComponent(texto);
+        const foto = (archivo) => encodeURI(CARPETA_FOTOS + archivo);
+        const crear = (etiqueta, props = {}) => Object.assign(document.createElement(etiqueta), props);
+
+        // Categorías
+        const rejilla = document.getElementById('categorias');
+        CATEGORIAS.forEach((c) => {
+            const li = crear('li', { className: 'aparece' });
+            const tarjeta = crear('article', { className: 'tarjeta' });
+
+            const marco = crear('div', { className: 'tarjeta-foto' });
+            const img = crear('img', { src: foto(c.foto), alt: c.alt, loading: 'lazy', decoding: 'async', width: 800, height: 600 });
+            img.style.objectPosition = c.encuadre || 'center';
+            marco.append(img);
+
+            const cuerpo = crear('div', { className: 'tarjeta-cuerpo' });
+            const enlace = crear('a', {
+                className: 'enlace-wa',
+                href: enlaceWa('¡Hola! Vi la página de Bazar Tía Domi y quisiera consultar por: ' + c.nombre + '.'),
+                target: '_blank',
+                rel: 'noopener'
+            });
+            enlace.append('Consultar por WhatsApp ', crear('span', { textContent: '→', ariaHidden: 'true' }));
+            enlace.setAttribute('aria-label', 'Consultar por ' + c.nombre + ' en WhatsApp');
+            cuerpo.append(crear('h3', { textContent: c.nombre }), crear('p', { textContent: c.descripcion }), enlace);
+
+            tarjeta.append(marco, cuerpo);
+            li.append(tarjeta);
+            rejilla.append(li);
+        });
+
+        // Precios de referencia
+        const listaPrecios = document.getElementById('precios');
+        PRECIOS.forEach((p) => {
+            const li = crear('li', { className: 'etiqueta' });
+            li.append(crear('small', { textContent: p.etiqueta }), crear('strong', { textContent: p.valor }));
+            listaPrecios.append(li);
+        });
+
+        // Enlaces de WhatsApp con mensaje predefinido
+        document.querySelectorAll('[data-wa]').forEach((a) => {
+            a.href = enlaceWa(NEGOCIO.mensajes[a.dataset.wa] || NEGOCIO.mensajes.general);
+        });
+
+        // Datos de contacto: solo se muestran los que estén completos
+        const datos = document.getElementById('datos-contacto');
+        const fila = (icono, titulo, contenido) => {
+            const li = crear('li');
+            const texto = crear('div');
+            texto.append(crear('small', { textContent: titulo }), contenido);
+            li.append(crear('span', { className: 'icono', textContent: icono, ariaHidden: 'true' }), texto);
+            datos.append(li);
+        };
+        const enlace = (href, texto) => crear('a', { href, textContent: texto, target: '_blank', rel: 'noopener' });
+
+        fila('🛍️', 'Negocio', crear('span', { textContent: NEGOCIO.nombre + ' · ' + NEGOCIO.eslogan }));
+        fila('💬', 'WhatsApp', enlace(enlaceWa(NEGOCIO.mensajes.general), numero ? '+' + numero : 'Escríbenos por WhatsApp'));
+        if (NEGOCIO.direccion) fila('📍', 'Dirección', crear('span', { textContent: NEGOCIO.direccion }));
+        if (NEGOCIO.horario) fila('🕒', 'Horario', crear('span', { textContent: NEGOCIO.horario }));
+        if (NEGOCIO.instagram) fila('📷', 'Instagram', enlace(NEGOCIO.instagram, 'Síguenos en Instagram'));
+        if (NEGOCIO.facebook) fila('👍', 'Facebook', enlace(NEGOCIO.facebook, 'Encuéntranos en Facebook'));
+
+        // Menú móvil
+        const boton = document.querySelector('.menu-btn');
+        const menu = document.getElementById('menu');
+        const cerrarMenu = () => {
+            menu.classList.remove('abierto');
+            boton.setAttribute('aria-expanded', 'false');
+            boton.setAttribute('aria-label', 'Abrir menú');
+        };
+        boton.addEventListener('click', () => {
+            const abierto = menu.classList.toggle('abierto');
+            boton.setAttribute('aria-expanded', String(abierto));
+            boton.setAttribute('aria-label', abierto ? 'Cerrar menú' : 'Abrir menú');
+        });
+        menu.addEventListener('click', (e) => { if (e.target.closest('a')) cerrarMenu(); });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && menu.classList.contains('abierto')) { cerrarMenu(); boton.focus(); }
+        });
+
+        // Aparición suave al hacer scroll
+        const elementos = document.querySelectorAll('.aparece');
+        if ('IntersectionObserver' in window) {
+            const observador = new IntersectionObserver((entradas) => {
+                entradas.forEach((entrada) => {
+                    if (entrada.isIntersecting) {
+                        entrada.target.classList.add('visible');
+                        observador.unobserve(entrada.target);
+                    }
+                });
+            }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+            elementos.forEach((el) => observador.observe(el));
+        } else {
+            elementos.forEach((el) => el.classList.add('visible'));
+        }
+    </script>
+</body>
+</html>
